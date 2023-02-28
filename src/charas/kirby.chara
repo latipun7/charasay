@@ -1,0 +1,46 @@
+# Kirby
+# sprite from Kirby Super Star (SNES) - https://www.spriters-resource.com/snes/kirbysuperstarkirbysfunpak/sheet/52859/
+# Generated with Charc0al's cowsay file converter http://charc0al.github.io/cowsay-files/converter
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts ";
+$a = "\e[48;5;234m  ";
+$b = "\e[48;5;132m  ";
+$c = "\e[48;5;175m  ";
+$d = "\e[48;5;212m  ";
+$e = "\e[48;5;224m  ";
+$f = "\e[48;5;231m  ";
+$g = "\e[48;5;124m  ";
+$h = "\e[48;5;196m  ";
+
+$the_cow = <<EOC
+          $t
+            $t
+              $t
+                $t      $a            $x
+                  $t$a  $b$c$d    $c$b$a  $x
+                  $a$b$d  $e        $d  $b$a$x
+                $a$c$d$e                $d$c$a$x
+              $a$c$e                        $c$a$x
+            $a$b$d$e          $b$c$e  $b$c$e$d$b$a$x
+            $a$d$e            $f$b$e  $f$b$e  $d$a$x
+          $a$b$d$e            $a  $e  $a  $e  $d$b$a$x
+          $a$c$e              $b$a$e  $b$a$e    $c$a$x
+          $a$d$e              $c$a$e  $c$a$e    $d$a$x
+        $a$e                  $c$a$e  $c$a$e    $d$a$x
+      $a$e              $d      $c$e  $d$c$d  $e$d$a$x
+      $a$d$e                                    $c$a$x
+      $a$b$d    $e$c$e                $c$e    $d$b$a$x
+        $a$b    $c$e                        $d  $a$x
+          $a    $c$d  $e                $d    $b$a$x
+            $a$c$d                          $c$a$x
+          $a$g$a$c$d                        $c$a$x
+        $a$g$h$g  $c$d                    $c$a$g$a$x
+        $a$h      $g  $d                $b$a$g    $a$x
+        $a$h          $g    $d    $c$b$a  $g    $h$g$a$x
+        $a$g$h          $g  $a        $g      $h  $g$a$x
+          $a$h            $g$a$x    $a  $g  $h    $g$a$x
+            $a$g  $h      $g$a$x      $a$g        $a$x
+              $a  $g      $a$x          $a        $x
+                $a        $x
+EOC

@@ -1,0 +1,51 @@
+# Tux
+# by u/__PETTYOFFICER117__ - https://www.reddit.com/r/linux/comments/4tiu19/i_made_a_pixelart_tux_figured_it_could_be_useful/
+# Generated with Charc0al's cowsay file converter http://charc0al.github.io/cowsay-files/converter
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts ";
+$a = "\e[48;5;235m  ";
+$b = "\e[48;5;231m  ";
+$c = "\e[48;5;220m  ";
+
+$the_cow = <<EOC
+          $t
+            $t                  $a    $x
+              $t            $a            $x
+                $t        $a                $x
+                  $t      $a                  $x
+                        $a                    $x
+                        $a                    $x
+                        $a$b    $a$b    $a    $x
+                        $a$b$a$b$a$b$a$b$a    $x
+                        $a$b    $a$b    $a    $x
+                        $a  $c        $a      $x
+                        $c                $a  $x
+                        $c                $a    $x
+                        $a$c            $a      $x
+                        $a  $b$c    $b  $a        $x
+                      $a  $b              $a      $x
+                      $a  $b              $a        $x
+                    $a    $b                $a        $x
+                    $a  $b                  $a        $x
+                  $a  $b                      $a        $x
+                $a    $b                      $a          $x
+                $a  $b                          $a        $x
+              $a    $b                          $a          $x
+              $a  $b                            $a          $x
+            $a    $b                            $a          $x
+            $a    $b                            $a          $x
+            $a      $b                          $a          $x
+            $c  $a    $b                        $a$c      $a$x
+          $c      $a    $b                    $c            $x
+        $c          $a    $b                  $c              $x
+      $c              $a    $b              $a$c              $x
+    $c                $a    $b            $a  $c                $x
+    $c                  $a    $b        $a    $c                $x
+    $c                  $a                    $c                $x
+    $c                    $a                $c                $x
+      $c                    $a              $c              $x
+          $c                $x$a          $x$c            $x
+              $c          $x                $c        $x
+                                              $c    $x
+EOC

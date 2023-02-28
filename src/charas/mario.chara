@@ -1,0 +1,53 @@
+# Mario
+# sprite from Super Mario World (SNES)
+# Generated with Charc0al's cowsay file converter http://charc0al.github.io/cowsay-files/converter
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts ";
+$a = "\e[48;5;52m  ";
+$b = "\e[48;5;203m  ";
+$c = "\e[48;5;221m  ";
+$d = "\e[48;5;124m  ";
+$e = "\e[48;5;136m  ";
+$f = "\e[48;5;231m  ";
+$g = "\e[48;5;235m  ";
+$h = "\e[48;5;216m  ";
+$i = "\e[48;5;223m  ";
+$j = "\e[48;5;94m  ";
+$k = "\e[48;5;240m  ";
+$l = "\e[48;5;17m  ";
+$m = "\e[48;5;31m  ";
+$n = "\e[48;5;116m  ";
+
+$the_cow = <<EOC
+          $t
+            $t
+              $t
+                      $a        $x
+                  $a  $b  $c$b  $a$x
+                $a$b  $d$e$c$f$d$a$x
+              $a$b$d  $g            $x
+            $a$b$d$g                  $x
+          $a$d  $g                    $x
+          $a$d  $g  $h$f  $h$f  $g  $x
+          $h$i$g  $h  $f$g$i$g$f$x
+        $h$j$i$g  $h$i$f$g$i$g$f$i$j$x
+        $h$j$h$g    $i  $h  $i    $j$x
+          $h    $g$i  $g$j$h      $j$x
+          $g  $h    $g                $x
+            $g  $h  $i  $g          $x
+          $a  $g$j$h          $k      $x
+        $a$d          $a  $k    $f$k$f$k$x
+        $a$d$b      $l  $b  $l$f$k$f  $k$x
+        $a$d$k    $d  $m  $d  $m$k$f  $k$x
+        $a$k$f  $k  $a  $n  $a  $n$k  $x
+        $k$f        $k$n$f  $n  $f$l$x
+        $k$f        $k$n$f  $n  $l$j  $x
+          $k$f    $k$n        $l$j$c$j$g$x
+          $g$k    $m  $n    $l$j    $g  $x
+        $g$j  $l  $m        $l$j    $g  $x
+        $g$j  $l              $j  $g  $x
+        $g$j$c$j  $l  $x      $j$g    $x
+        $g$j  $g  $x            $g  $x
+          $g  $x
+EOC

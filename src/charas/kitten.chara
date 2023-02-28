@@ -1,0 +1,48 @@
+# Kitten
+# by Unknown
+# Generated with Charc0al's cowsay file converter http://charc0al.github.io/cowsay-files/converter
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts ";
+$a = "\e[48;5;234m  ";
+$b = "\e[48;5;238m  ";
+$c = "\e[48;5;247m  ";
+$d = "\e[48;5;218m  ";
+$e = "\e[48;5;231m  ";
+
+$the_cow = <<EOC
+                        $t
+                          $t                        $a  $x
+                            $t                    $a$b  $a$x
+                              $t                $a    $b$a$x
+          $a    $x                            $a      $b  $a$x
+        $a$c    $a          $x        $a              $b  $a$x
+        $a$c    $a  $b      $a        $b        $a      $b$a$x
+      $a$c$b$c  $a  $b$a  $b      $c$b      $c$b    $a  $b$a$x
+      $a$c  $b$a    $b$a      $b    $c$b  $c    $b$c$b$a    $x
+    $a$b$c    $a$x$a  $d  $a    $b  $c  $b  $c  $b$c  $b$a  $x
+    $a$c$b  $a$x  $a  $d    $a    $b$c    $b$c          $a  $x
+    $a$b$c  $a$x  $a  $d      $a  $c                  $a    $x
+    $a$c$b  $a$x    $a  $d    $a  $c                $a      $x
+    $a$b$c  $a$x    $a    $d$a    $c                $a  $c$a$x
+    $a$b    $a$x      $a      $c    $b$a  $c        $e$a$e$a$x
+    $a$b$c    $a$x    $a  $b  $c  $b$a      $c$e  $c$a  $e$a    $x
+    $a$c  $b    $a      $b  $c    $a$c$a    $c$e    $b  $e  $b$x
+      $a$b    $a  $c$b$a$c      $e$c$e  $a  $c$e        $b$a    $x
+      $a$b  $a$b    $c$a$b    $c$e    $a    $e  $c  $e    $b$x
+        $a  $b    $c  $a$b$c  $a  $c$e$b  $e    $a  $e  $c$b$x
+        $a$c$b  $c  $b$c      $e                      $c$b$x
+      $a$b$c$b$c  $b  $c      $b$a  $b$e            $c$b$x
+      $a$b$c      $b  $c        $b  $e          $b    $x
+      $a$b$c      $b$c    $b$c                $b$a$x
+      $a$b  $c    $b$c    $b$c$b  $c    $e$c$b  $c$a$x
+    $a$b    $c    $b$c        $b      $e  $b$c    $b$a$x
+    $a$b      $c  $e    $c      $b  $a$e$c$a$e      $b$a$x
+    $a$c$b$c      $e      $c        $a      $e        $a$x
+    $a$e$c      $e  $c$a    $e$c$e$c$e$a$x  $a$e  $c$e$a$x
+    $a$e      $c$a    $x    $a$e      $c$a$x$a$c  $e  $a$x
+    $a$e      $a      $x    $a$c$e      $a$x  $a      $x
+    $a$e    $a$x              $a$e$c  $e$a$x
+      $a    $x                $a$c  $e$a$x
+                                $a    $x
+EOC
