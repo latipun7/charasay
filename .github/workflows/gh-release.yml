@@ -56,18 +56,18 @@ jobs:
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
             cp "target/${{ matrix.cargo-target }}/release/chara.exe" staging/
             cd staging
-            7z a ../release.zip *
+            7z a ../${{ matrix.artifact-name }}.zip *
           else
             cp "target/${{ matrix.cargo-target }}/release/chara" staging/
             cd staging
-            zip ../release.zip *
+            zip ../${{ matrix.artifact-name }}.zip *
           fi
 
       - name: ⬆️ Upload Binary Artifact
         uses: actions/upload-artifact@v3.1.2
         with:
-          name: ${{ matrix.artifact-name }}.zip
-          path: release.zip
+          name: ${{ matrix.artifact-name }}
+          path: ${{ matrix.artifact-name }}.zip
           retention-days: 5
 
   create-release:
@@ -86,9 +86,4 @@ jobs:
         with:
           draft: true
           generate_release_notes: true
-          files: |
-            chara-linux-x86_64.zip
-            chara-linux-aarch64.zip
-            chara-macos-x86_64.zip
-            chara-macos-aarch64.zip
-            chara-windows-x86_64.zip
+          files: chara-*/*.zip
