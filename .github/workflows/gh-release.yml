@@ -84,7 +84,7 @@ jobs:
 
     steps:
       - name: ⬇️ Download All Binary Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v3.0.2
 
       - name: 🗃️Create Draft Release
         uses: softprops/action-gh-release@v1
