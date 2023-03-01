@@ -4,43 +4,36 @@ on:
   push:
     tags: ["*"]
 
-env:
-  WIN_ARTIFACT: chara-windows-x86_64
-  LINUX_ARTIFACT: chara-linux-x86_64
-  LINUX_AARCH_ARTIFACT: chara-linux-aarch64
-  MACOS_ARTIFACT: chara-macos-x86_64
-  MACOS_AARCH_ARTIFACT: chara-macos-aarch64
-
 jobs:
   build-artifacts:
     strategy:
       matrix:
         include:
           - os: windows-latest
-            artifact-name: ${{ env.WIN_ARTIFACT }}
+            artifact-name: chara-windows-x86_64
             cargo-target: x86_64-pc-windows-msvc
           - os: ubuntu-latest
-            artifact-name: ${{ env.LINUX_ARTIFACT }}
+            artifact-name: chara-linux-x86_64
             cargo-target: x86_64-unknown-linux-gnu
           - os: ubuntu-latest
-            artifact-name: ${{ env.LINUX_AARCH_ARTIFACT }}
+            artifact-name: chara-linux-aarch64
             cargo-target: aarch64-unknown-linux-gnu
             linker: gcc-aarch64-linux-gnu
           - os: macos-latest
-            artifact-name: ${{ env.MACOS_ARTIFACT }}
+            artifact-name: chara-macos-x86_64
             cargo-target: x86_64-apple-darwin
           - os: macos-latest
-            artifact-name: ${{ env.MACOS_AARCH_ARTIFACT }}
+            artifact-name: chara-macos-aarch64
             cargo-target: aarch64-apple-darwin
 
     name: ⚙️ Build (${{ matrix.artifact-name }})
     runs-on: ${{ matrix.os }}
     steps:
       - name: 🛎️ Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: ✨ Install Rust
-        uses: actions-rs/toolchain@v1
+        uses: actions-rs/toolchain@v1.0.7
         with:
           toolchain: nightly
           target: ${{ matrix.cargo-target }}
@@ -71,9 +64,9 @@ jobs:
           fi
 
       - name: ⬆️ Upload Binary Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
-          name: ${{ matrix.artifact-name }}
+          name: ${{ matrix.artifact-name }}.zip
           path: release.zip
           retention-days: 5
 
@@ -84,7 +77,7 @@ jobs:
 
     steps:
       - name: ⬇️ Download All Binary Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v3.0.2
 
       - name: 🗃️Create Draft Release
         uses: softprops/action-gh-release@v1
@@ -94,8 +87,8 @@ jobs:
           draft: true
           generate_release_notes: true
           files: |
-            ${{ env.WIN_ARTIFACT }}.zip
-            ${{ env.LINUX_ARTIFACT }}.zip
-            ${{ env.LINUX_AARCH_ARTIFACT }}.zip
-            ${{ env.MACOS_ARTIFACT }}.zip
-            ${{ env.MACOS_AARCH_ARTIFACT }}.zip
+            chara-linux-x86_64.zip
+            chara-linux-aarch64.zip
+            chara-macos-x86_64.zip
+            chara-macos-aarch64.zip
+            chara-windows-x86_64.zip
