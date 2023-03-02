@@ -24,7 +24,7 @@ jobs:
             cargo-target: aarch64-apple-darwin
           - os: windows-latest
             artifact-name: chara-windows-x86_64
-            cargo-target: x86_64-pc-windows-msvc
+            cargo-target: x86_64-pc-windows-gnu
 
     name: ⚙️ Build (${{ matrix.artifact-name }})
     runs-on: ${{ matrix.os }}
@@ -37,6 +37,9 @@ jobs:
         run: |
           sudo apt update
           sudo apt install ${{ matrix.linker }}
+
+      - name: 🎯 Add Rustup Target
+        run: rustup target add ${{ matrix.cargo-target }}
 
       - name: ♻️ Manage Build Cache
         uses: actions/cache@v3.2.6
