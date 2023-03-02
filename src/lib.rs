@@ -77,23 +77,22 @@ fn create_speech_bubble(messages: &str, max_width: usize, think: bool) -> String
 
     let speech_bubble: SpeechBubble = if think { THINK_BUBBLE } else { ROUND_BUBBLE };
 
-    // Let textwrap work its magic
+    // for computing messages length
     let wrapped = fill(messages, max_width).replace('\t', "    ");
-
     let lines: Vec<&str> = wrapped.lines().collect();
-
     let line_count = lines.len();
     let actual_width = longest_line(&lines);
 
-    // top box border
+    // draw top box border
     write_buffer.push(speech_bubble.corner_top_left);
     for _ in 0..(actual_width + 4) {
         write_buffer.push(speech_bubble.top);
     }
     write_buffer.push(speech_bubble.corner_top_right);
 
-    // inner message
+    // draw inner message each line
     for (i, line) in lines.into_iter().enumerate() {
+        // left border
         if line_count == 1 {
             write_buffer.push(speech_bubble.short_left);
         } else if i == 0 {
@@ -104,10 +103,12 @@ fn create_speech_bubble(messages: &str, max_width: usize, think: bool) -> String
             write_buffer.push(speech_bubble.left);
         }
 
+        // text line
         let line_len = line_len(line);
         write_buffer.push(line);
         write_buffer.resize(write_buffer.len() + actual_width - line_len, SPACE);
 
+        // right border
         if line_count == 1 {
             write_buffer.push(speech_bubble.short_right);
         } else if i == 0 {
@@ -119,7 +120,7 @@ fn create_speech_bubble(messages: &str, max_width: usize, think: bool) -> String
         }
     }
 
-    // bottom box border
+    // draw bottom box border
     write_buffer.push(speech_bubble.corner_bottom_left);
     for _ in 0..(actual_width + 4) {
         write_buffer.push(speech_bubble.bottom);
@@ -130,7 +131,7 @@ fn create_speech_bubble(messages: &str, max_width: usize, think: bool) -> String
 }
 
 fn parse_character(chara: &String, voice_line: &str) -> String {
-    // Get raw text
+    // get raw text from file or asset
     let mut raw_chara = String::new();
     match chara.contains(".chara") {
         true => {
@@ -159,6 +160,7 @@ fn parse_character(chara: &String, voice_line: &str) -> String {
         .join("\n")
         .replace("\\e", "\x1B");
 
+    // extract variable definition to HashMap
     let re = Regex::new(r"(?P<var>\$\w).*=.*(?P<val>\x1B\[.*m\s*).;").unwrap();
     let replacers: Vec<HashMap<&str, &str>> = re
         .captures_iter(&stripped_chara)
@@ -179,6 +181,7 @@ fn parse_character(chara: &String, voice_line: &str) -> String {
         .replace("$x", "\x1B[49m  ")
         .replace("$t", voice_line);
 
+    // replace variable from character's body with actual value
     for replacer in replacers {
         chara_body = chara_body.replace(
             replacer.get("var").copied().unwrap(),
@@ -189,6 +192,7 @@ fn parse_character(chara: &String, voice_line: &str) -> String {
     chara_body
 }
 
+/// Format arguments to form complete charasay
 pub fn format_character(messages: &str, chara: &String, max_width: usize, think: bool) -> String {
     let voice_line = if think { "o" } else { "╲" };
 
@@ -198,6 +202,7 @@ pub fn format_character(messages: &str, chara: &String, max_width: usize, think:
     format!("{}{}", speech_bubble, character)
 }
 
+/// List all characters name from asset
 pub fn list_chara() -> Vec<String> {
     Asset::iter()
         .map(|file| file.as_ref().replace(".chara", ""))
