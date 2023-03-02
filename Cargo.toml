@@ -1,6 +1,6 @@
 [package]
 name = "charasay"
-version = "0.1.1"
+version = "1.0.0"
 authors = ["Latif Sulistyo <latifsulistyo.me@gmail.com>"]
 edition = "2021"
 description = "The future of cowsay 🐮! Colorful characters saying something 🗨️."
@@ -26,3 +26,4 @@ textwrap = { version = "0.16.0", features = ["terminal_size"] }
 unicode-width = "0.1.10"
 regex = "1.7.1"
 rand = "0.8.5"
+strip-ansi-escapes = "0.1.1"

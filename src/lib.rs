@@ -2,6 +2,7 @@ use std::{collections::HashMap, fs::File, io::Read, str::from_utf8};
 
 use regex::Regex;
 use rust_embed::RustEmbed;
+use strip_ansi_escapes::strip;
 use textwrap::fill;
 use unicode_width::UnicodeWidthStr;
 
@@ -60,12 +61,15 @@ const THINK_BUBBLE: SpeechBubble = SpeechBubble {
     short_right: "  )\n",
 };
 
+fn line_len(line: &str) -> usize {
+    let stripped = strip(line).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
+    let text = from_utf8(stripped.as_slice()).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
+
+    UnicodeWidthStr::width(text)
+}
+
 fn longest_line(lines: &[&str]) -> usize {
-    lines
-        .iter()
-        .map(|line| UnicodeWidthStr::width(*line))
-        .max()
-        .unwrap_or(0)
+    lines.iter().map(|line| line_len(line)).max().unwrap_or(0)
 }
 
 fn create_speech_bubble(messages: &str, max_width: usize, think: bool) -> String {
@@ -100,7 +104,7 @@ fn create_speech_bubble(messages: &str, max_width: usize, think: bool) -> String
             write_buffer.push(speech_bubble.left);
         }
 
-        let line_len = UnicodeWidthStr::width(line);
+        let line_len = line_len(line);
         write_buffer.push(line);
         write_buffer.resize(write_buffer.len() + actual_width - line_len, SPACE);
 
