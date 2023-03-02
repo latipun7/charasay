@@ -43,6 +43,22 @@ const ROUND_BUBBLE: SpeechBubble = SpeechBubble {
     short_left: "│  ",
     short_right: "  │\n",
 };
+const THINK_BUBBLE: SpeechBubble = SpeechBubble {
+    corner_top_left: "(",
+    top: "⁀",
+    corner_top_right: ")\n",
+    top_right: "  )\n",
+    right: "  )\n",
+    bottom_right: "  )\n",
+    corner_bottom_right: ")\n",
+    bottom: "‿",
+    corner_bottom_left: "(",
+    bottom_left: "(  ",
+    left: "(  ",
+    top_left: "(  ",
+    short_left: "(  ",
+    short_right: "  )\n",
+};
 
 fn longest_line(lines: &[&str]) -> usize {
     lines
@@ -52,9 +68,10 @@ fn longest_line(lines: &[&str]) -> usize {
         .unwrap_or(0)
 }
 
-fn create_speech_bubble(messages: &str, max_width: usize) -> String {
-    // TODO: use smallvec(?)
+fn create_speech_bubble(messages: &str, max_width: usize, think: bool) -> String {
     let mut write_buffer = Vec::new();
+
+    let speech_bubble: SpeechBubble = if think { THINK_BUBBLE } else { ROUND_BUBBLE };
 
     // Let textwrap work its magic
     let wrapped = fill(messages, max_width).replace('\t', "    ");
@@ -65,22 +82,22 @@ fn create_speech_bubble(messages: &str, max_width: usize) -> String {
     let actual_width = longest_line(&lines);
 
     // top box border
-    write_buffer.push(ROUND_BUBBLE.corner_top_left);
+    write_buffer.push(speech_bubble.corner_top_left);
     for _ in 0..(actual_width + 4) {
-        write_buffer.push(ROUND_BUBBLE.top);
+        write_buffer.push(speech_bubble.top);
     }
-    write_buffer.push(ROUND_BUBBLE.corner_top_right);
+    write_buffer.push(speech_bubble.corner_top_right);
 
     // inner message
     for (i, line) in lines.into_iter().enumerate() {
         if line_count == 1 {
-            write_buffer.push(ROUND_BUBBLE.short_left);
+            write_buffer.push(speech_bubble.short_left);
         } else if i == 0 {
-            write_buffer.push(ROUND_BUBBLE.top_left);
+            write_buffer.push(speech_bubble.top_left);
         } else if i == line_count - 1 {
-            write_buffer.push(ROUND_BUBBLE.bottom_left);
+            write_buffer.push(speech_bubble.bottom_left);
         } else {
-            write_buffer.push(ROUND_BUBBLE.left);
+            write_buffer.push(speech_bubble.left);
         }
 
         let line_len = UnicodeWidthStr::width(line);
@@ -88,22 +105,22 @@ fn create_speech_bubble(messages: &str, max_width: usize) -> String {
         write_buffer.resize(write_buffer.len() + actual_width - line_len, SPACE);
 
         if line_count == 1 {
-            write_buffer.push(ROUND_BUBBLE.short_right);
+            write_buffer.push(speech_bubble.short_right);
         } else if i == 0 {
-            write_buffer.push(ROUND_BUBBLE.top_right);
+            write_buffer.push(speech_bubble.top_right);
         } else if i == line_count - 1 {
-            write_buffer.push(ROUND_BUBBLE.bottom_right);
+            write_buffer.push(speech_bubble.bottom_right);
         } else {
-            write_buffer.push(ROUND_BUBBLE.right);
+            write_buffer.push(speech_bubble.right);
         }
     }
 
     // bottom box border
-    write_buffer.push(ROUND_BUBBLE.corner_bottom_left);
+    write_buffer.push(speech_bubble.corner_bottom_left);
     for _ in 0..(actual_width + 4) {
-        write_buffer.push(ROUND_BUBBLE.bottom);
+        write_buffer.push(speech_bubble.bottom);
     }
-    write_buffer.push(ROUND_BUBBLE.corner_bottom_right);
+    write_buffer.push(speech_bubble.corner_bottom_right);
 
     write_buffer.join("")
 }
@@ -169,9 +186,9 @@ fn parse_character(chara: &String, voice_line: &str) -> String {
 }
 
 pub fn format_character(messages: &str, chara: &String, max_width: usize, think: bool) -> String {
-    let voice_line = if think { "o" } else { "\\" };
+    let voice_line = if think { "o" } else { "╲" };
 
-    let speech_bubble = create_speech_bubble(messages, max_width);
+    let speech_bubble = create_speech_bubble(messages, max_width, think);
     let character = parse_character(chara, voice_line);
 
     format!("{}{}", speech_bubble, character)
