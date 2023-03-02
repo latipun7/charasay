@@ -1,0 +1,37 @@
+# Goldeen (Pokemon)
+# by Bulbapedia - https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_Kanto_Pok%C3%A9dex_number
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;5;231m  ";
+$b = "\e[48;5;250m  ";
+$c = "\e[48;5;238m  ";
+$d = "\e[48;5;203m  ";
+$e = "\e[48;5;131m  ";
+$f = "\e[48;5;223m  ";
+$g = "\e[48;5;217m  ";
+$h = "\e[48;5;186m  ";
+$i = "\e[48;5;245m  ";
+$j = "\e[48;5;73m  ";
+$k = "\e[48;5;210m  ";
+
+$the_chara = <<EOC
+          $t
+           $t                 $a$x
+            $t                $a  $x
+             $t             $b$a  $b$x
+              $t  $b  $x  $c$a$d$a  $x
+               $t   $b    $c$d$e$d$a$c    $x
+                    $c  $b  $d$e$d$c$a    $c$x
+        $f$x      $c$a$b$c  $e$d$c$d$g$a    $c$x
+        $h$f$x  $a$b$a$d$g$d$c$d$e    $d$a    $x
+        $i$f  $c$a$d  $g$a$g  $c$d  $g$a  $x
+          $f  $d    $e  $a    $c  $x
+        $c$d    $a$e$d  $e$a    $x
+  $b  $e$c$g  $a$i$d$e  $d$a$b  $x
+    $b  $e$a    $i$a$x$j$a$c  $x
+    $b$x  $a$b  $a$i$a  $b$d  $x
+            $k  $b      $c$d$g$a  $x
+                $k$b  $x  $a        $x
+                          $b$a$x
+EOC

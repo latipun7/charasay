@@ -1,0 +1,34 @@
+# Clefairy (Pokemon)
+# by Bulbapedia - https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_Kanto_Pok%C3%A9dex_number
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;5;131m  ";
+$b = "\e[48;5;217m  ";
+$c = "\e[48;5;238m  ";
+$d = "\e[48;5;174m  ";
+$e = "\e[48;5;231m  ";
+$f = "\e[48;5;250m  ";
+
+$the_chara = <<EOC
+        $t
+         $t
+          $t
+      $a$x
+      $a  $x$b    $x
+      $b$c$b        $x
+      $b$c$d$b$c$b  $d$b  $a  $x
+      $b  $c  $d$b        $a$c$x
+    $d$e$b                $c  $d  $x
+    $b$x$b    $e$b$d$b  $c    $d$x
+  $d$b        $x$b$d$b$c    $a  $x
+  $e$b  $c  $b  $d$b    $d$c$a    $x
+  $a$b  $d$a$b          $d  $c    $x
+    $b          $a$b    $d  $c$a$x
+    $d$b      $c$e$b  $d    $c$a$x
+      $d$b      $c  $d    $c$a  $x
+    $f$c$d                $c$a$x
+          $c$d          $c$a$c$x
+              $d      $c$x
+                $e  $x
+EOC

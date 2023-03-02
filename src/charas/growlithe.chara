@@ -1,0 +1,39 @@
+# Growlithe (Pokemon)
+# by Bulbapedia - https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_Kanto_Pok%C3%A9dex_number
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;5;222m  ";
+$b = "\e[48;5;137m  ";
+$c = "\e[48;5;179m  ";
+$d = "\e[48;5;238m  ";
+$e = "\e[48;5;173m  ";
+$f = "\e[48;5;244m  ";
+$g = "\e[48;5;215m  ";
+$h = "\e[48;5;131m  ";
+$i = "\e[48;5;231m  ";
+
+$the_chara = <<EOC
+    $t
+     $t
+      $t      $a$x
+          $a  $b$x
+        $a  $c$a  $x
+      $d$a      $x
+    $d$a      $c  $x
+  $e$x$a      $d$x
+  $e  $f$a$d  $g  $d$g  $x
+    $e$g$h$e$g$d$g  $d  $g$x  $a    $x
+      $g    $d$i$g$d$f  $g$d$a      $c$x
+    $g    $d$x$i$g  $f$g$d$a      $b$c$x
+    $d$a      $g    $d  $c  $a  $c$b$c  $x
+      $d$a    $c$g$d$g$h$d$c        $x
+    $a$c$b  $c  $b$g      $d$c      $x
+      $c        $a$d$g  $d    $c    $x
+    $a  $c    $a    $d$g  $e$d$c  $x
+      $d$a        $d$e  $d    $x
+        $d$a$c$a$d  $e$h  $e$x
+      $e$h$a$d  $g$x  $g  $x
+      $i$e$d$g  $e$x
+          $i$g$i$x
+EOC

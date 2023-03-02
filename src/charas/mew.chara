@@ -1,9 +1,8 @@
 # Mew (Pokemon)
 # by Stanleyjo - https://www.deviantart.com/stanleyjo/art/Mew-Pixel-Art-517712578
-# Generated with Charc0al's cowsay file converter http://charc0al.github.io/cowsay-files/converter
 
 $x = "\e[49m  ";          #reset color
-$t = "$thoughts ";
+$t = "$thoughts";
 $a = "\e[48;5;235m  ";
 $b = "\e[48;5;224m  ";
 $c = "\e[48;5;216m  ";
@@ -14,7 +13,7 @@ $h = "\e[48;5;131m  ";
 $i = "\e[48;5;75m  ";
 $j = "\e[48;5;174m  ";
 
-$the_cow = <<EOC
+$the_chara = <<EOC
           $t                                                          $a  $x
            $t                                                     $a  $b  $a$x
             $t                                                  $a$b    $c$a$x

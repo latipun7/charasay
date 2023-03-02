@@ -1,0 +1,59 @@
+# Aya (Touhou) - true color
+# by Unknown - https://m.minecraft.novaskin.me/skin/5196393402/Aya-Touhou-Pixel-Art
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;2;133;1;33m  ";
+$b = "\e[48;2;199;1;33m  ";
+$c = "\e[48;2;246;33;98m  ";
+$d = "\e[48;2;48;49;49m  ";
+$e = "\e[48;2;99;99;90m  ";
+$f = "\e[48;2;181;180;172m  ";
+$g = "\e[48;2;181;180;133m  ";
+$h = "\e[48;2;246;247;230m  ";
+$i = "\e[48;2;24;24;24m  ";
+$j = "\e[48;2;231;149;133m  ";
+$k = "\e[48;2;247;230;149m  ";
+$l = "\e[48;2;133;132;83m  ";
+$m = "\e[48;2;255;254;254m  ";
+$n = "\e[48;2;246;181;149m  ";
+$o = "\e[48;2;214;0;82m  ";
+$p = "\e[48;2;231;133;67m  ";
+$q = "\e[48;2;80;81;81m  ";
+$r = "\e[48;2;199;199;206m  ";
+$s = "\e[48;2;254;230;90m  ";
+$u = "\e[48;2;33;32;33m  ";
+
+$the_chara = <<EOC
+             $t
+              $t              $a  $b$x
+               $t           $a$b$a$c$b$x
+                $t      $d$a$b$a$b$c  $b$d  $x
+                    $d  $a$b  $a$c      $b$e  $d$x
+                  $d    $a$b  $a$c      $b$e    $d$x
+                $d  $e  $d$a  $b        $e        $d$x
+                $d$e      $d$a      $d$e            $d$x
+              $d  $e                              $f$e$x
+              $d  $e$a$d$e                  $f    $e  $d$x
+              $g$h$b$d$e  $f    $e$f    $e$d$e          $x
+            $g$h    $d$e        $d$e    $d$i$e  $d$e$d$e$x
+            $g  $h$g$e        $d  $e  $d  $i$e$i$d$e$d  $x
+            $a$g  $e        $d$i$e$d  $i$j$x  $i$d  $i$d$x
+            $b$d$e$d$e  $d$x      $d$i$j$k$x$f$i$d$i$x$i$x
+          $g$h$d    $e  $x$f$x  $j    $k  $b$f$i$d$x$a$x
+        $l$h    $d$i$e$d$i$m  $b$k        $c$m$i  $x$g$h$x
+        $l$g$h$g$d$i$e  $i$m$b$c$k        $b$k$i$d$x$g  $x
+        $a$l  $i$d$i$e  $i$k$b  $k          $n$i$d$x$l$x
+        $b$x$i  $d    $e$i$n$k            $n$i$o$x$o$x$o  $x
+        $g$h$i  $x$d$i$d  $i$n            $i  $o$p$o$p  $o$x
+      $l$h    $i$x$d$i  $j$q$f$m$r$m$a$n$a$r$x$p$s$p$s$p$x
+      $l$g$h$g$x    $i$x$i$n$i$a$r$m  $b$r$x$q$x$s  $p$o  $x
+        $l  $x        $r$f$i$a      $b  $a  $m$x$p$s  $p$x
+                      $r$m  $x$a  $b      $a$x$j$x  $p$o  $x
+                    $r$b$m  $x$u$q    $u$q$u  $x
+                    $r$m$b$m$x$q$e$m$u$q$u    $x
+                      $r$m$r$u$q$e$m$q$f$q$e$u$x
+                        $u  $q$e$m    $f$m$e$x
+                        $u  $q$e$m    $x$l$x
+                          $l$g$x
+EOC

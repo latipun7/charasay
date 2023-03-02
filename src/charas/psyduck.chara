@@ -1,0 +1,35 @@
+# Psyduck (Pokemon)
+# by Bulbapedia - https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_Kanto_Pok%C3%A9dex_number
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;5;221m  ";
+$b = "\e[48;5;238m  ";
+$c = "\e[48;5;143m  ";
+$d = "\e[48;5;137m  ";
+$e = "\e[48;5;231m  ";
+$f = "\e[48;5;223m  ";
+$g = "\e[48;5;185m  ";
+
+$the_chara = <<EOC
+        $t
+         $t
+          $t
+        $a    $x
+      $a  $b  $a      $x
+    $c  $b$a              $x
+    $c$d$e$a      $c  $a    $x
+    $c$e$x$a    $c$e  $c$a$b$a$b$x
+      $d$e$b  $a$e$x$e  $b$a$c$a$x
+      $c$b$f  $b  $e  $d$b$a    $x
+      $b$f  $c$f  $b$d$c  $a      $x
+    $g$f        $g  $b$c$b$a      $x
+    $f      $g  $b      $c  $a  $x
+      $g      $b$c            $x
+        $b    $a    $c        $b$x
+        $c$a          $c      $b$c  $x
+    $g  $b$c$a      $c      $b$c  $x
+      $g  $b  $c        $b    $x
+          $c  $x$b      $c$g$x
+                  $c$g$c$g$x
+EOC

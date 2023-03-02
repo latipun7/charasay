@@ -1,14 +1,13 @@
 # Cow
 # by Unknown
-# Generated with Charc0al's cowsay file converter http://charc0al.github.io/cowsay-files/converter
 
 $x = "\e[49m  ";          #reset color
-$t = "$thoughts ";
+$t = "$thoughts";
 $a = "\e[48;5;235m  ";
 $b = "\e[48;5;223m  ";
 $c = "\e[48;5;231m  ";
 
-$the_cow = <<EOC
+$the_chara = <<EOC
        $t                     $a$x
         $t                  $a$b$a$x      $a  $x
          $t     $a$x        $a$b  $a$x  $a$c  $a$x

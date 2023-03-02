@@ -1,0 +1,55 @@
+# Remilia Scarlet (Touhou) - true color
+# by Unknown - https://m.minecraft.novaskin.me/skin/5198483230/Remilia-Scarlet-Touhou-Pixel-Art
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;2;199;1;33m  ";
+$b = "\e[48;2;246;198;199m  ";
+$c = "\e[48;2;255;254;254m  ";
+$d = "\e[48;2;199;133;165m  ";
+$e = "\e[48;2;246;33;98m  ";
+$f = "\e[48;2;133;1;33m  ";
+$g = "\e[48;2;148;132;239m  ";
+$h = "\e[48;2;230;231;254m  ";
+$i = "\e[48;2;82;66;140m  ";
+$j = "\e[48;2;230;164;132m  ";
+$k = "\e[48;2;181;180;172m  ";
+$l = "\e[48;2;247;231;165m  ";
+$m = "\e[48;2;247;199;149m  ";
+$n = "\e[48;2;24;24;24m  ";
+$o = "\e[48;2;48;49;49m  ";
+$p = "\e[48;2;99;99;90m  ";
+
+$the_chara = <<EOC
+      $t
+       $t       $a  $x      $b$c      $b  $x
+        $t    $a$c$b$x$d$b$c              $b$d  $x
+         $t   $b$a$e$c$a$c                  $a$b$c$b$x
+            $b$a$f$a$b$e$b$c                $e$b$c  $b$x
+        $e$c$f$a$f  $b  $d$c$b$e  $a  $e$b$c$d$c  $b$c  $x
+        $a$b$a$f  $c$b$c    $e$c        $e$c    $b    $c  $x
+          $f  $c      $b$e$c                $e$b  $d$b  $c$x
+        $b  $c      $b$a$c$b      $c    $b  $d$f$g    $d$b$c$x
+        $d$b$c      $b$f$b$d    $b      $d$g      $h  $x$d  $x
+        $d$b        $d    $i  $g  $d  $g    $h    $c$h$g$x$d$x
+          $d$b  $d  $i    $g          $h$g  $c  $g$h    $x
+          $d    $i  $g  $c  $h$g  $c  $g$i$h  $i$g$h$g$h$x
+              $i$g$i$h      $g  $i$h$g$i$j  $x$i$h  $i$g$x
+              $i$g$i$g$h$g$x  $j$i$g$i$j  $x$k$i$h$g$x$i$g$x
+              $g  $i$g$h$x$k$x    $i$j$l  $a$k$i$g$x
+            $i$g  $i$h$g$i$c  $a$l$j$l    $e$c$i  $x
+            $i$g  $i$h  $i$c$a$e$l        $a$l$i$g$x
+            $i  $g$i$h  $i$l$a  $l          $m$i$g$x$n  $x
+      $n$o$n$i  $g    $h$i$m$l            $m$i    $x$o$x
+        $p$o$i    $g$i$g  $i$m            $x$i$x$i$x$p$x
+          $p$o$i$x$g$i  $x$b$c$a$c$e$c  $a$b$x$o$x$o$x
+          $p  $o  $x$i$x  $e$a$x$a$b$e  $d$x$a$x$o$p$x
+                $p$o$x  $c$b$x$d$b$e    $a$x$c$x$p$x
+                $p$o$x$c$b$x$d$b$e  $a  $e$d$x$j$x
+                $o$x$l$j$x$d$b$c    $a$b$c  $d$x
+                        $d$b  $c  $e$c$a$c  $b$a$x
+                    $a$d$b  $c    $e$c  $e  $c$b$x
+                    $d$a  $b$c$e  $c          $x
+                      $b  $c        $x  $a$e$x
+                          $a$e$x
+EOC

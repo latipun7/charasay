@@ -1,0 +1,42 @@
+# Wartortle (Pokemon)
+# by Bulbapedia - https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_Kanto_Pok%C3%A9dex_number
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;5;189m  ";
+$b = "\e[48;5;152m  ";
+$c = "\e[48;5;68m  ";
+$d = "\e[48;5;238m  ";
+$e = "\e[48;5;111m  ";
+$f = "\e[48;5;61m  ";
+$g = "\e[48;5;137m  ";
+$h = "\e[48;5;249m  ";
+$i = "\e[48;5;239m  ";
+$j = "\e[48;5;95m  ";
+$k = "\e[48;5;231m  ";
+$l = "\e[48;5;179m  ";
+$m = "\e[48;5;222m  ";
+
+$the_chara = <<EOC
+             $t
+      $a$x    $t
+      $a$x     $t
+    $b$c$a$x    $t        $a$x
+    $b$c$a$x          $a  $b$x
+    $b  $d$x        $a  $e$x          $a    $x
+      $d$e    $c$x$d$a$c$b$x        $a        $x
+    $c$e        $d$a$c$b$d$x        $a  $d$a$b$x
+    $e          $d$a$c$b  $x      $a    $b$d  $x
+  $e          $x$f$d$b  $d$g$x    $a  $d  $b$x
+  $e    $c$e$x$h$f$c$d  $i$g$j$x$b  $d$a  $x
+    $e  $c$f$x$k  $c$d$k  $i$g$d$b  $d$a  $x
+    $c$e    $j$k$f  $d  $k$i$g$j$d$b    $x
+  $c$x$c$f$c    $d  $e  $d$k$i  $d$b    $x
+  $h$c$x$d      $l$d$e  $c$k$i$j$d$b  $x
+          $m    $d$k$e  $d$k$i$j$d$x
+            $l  $d$c$h$d  $h$i  $x
+          $f$d  $m$d  $m$d  $h$x
+          $f  $d$x$l  $d$e$d$h$x
+                    $d$e  $c$x
+                      $c$f$c$x
+EOC

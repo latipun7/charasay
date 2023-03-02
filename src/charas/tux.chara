@@ -1,14 +1,13 @@
-# Tux
+# Tux (Mascot of Linux)
 # by u/__PETTYOFFICER117__ - https://www.reddit.com/r/linux/comments/4tiu19/i_made_a_pixelart_tux_figured_it_could_be_useful/
-# Generated with Charc0al's cowsay file converter http://charc0al.github.io/cowsay-files/converter
 
 $x = "\e[49m  ";          #reset color
-$t = "$thoughts ";
+$t = "$thoughts";
 $a = "\e[48;5;235m  ";
 $b = "\e[48;5;231m  ";
 $c = "\e[48;5;220m  ";
 
-$the_cow = <<EOC
+$the_chara = <<EOC
           $t
             $t                  $a    $x
               $t            $a            $x

@@ -1,0 +1,50 @@
+# Seaking (Pokemon)
+# by Bulbapedia - https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_Kanto_Pok%C3%A9dex_number
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;5;249m  ";
+$b = "\e[48;5;238m  ";
+$c = "\e[48;5;102m  ";
+$d = "\e[48;5;231m  ";
+$e = "\e[48;5;254m  ";
+$f = "\e[48;5;240m  ";
+$g = "\e[48;5;209m  ";
+$h = "\e[48;5;180m  ";
+$i = "\e[48;5;181m  ";
+$j = "\e[48;5;224m  ";
+$k = "\e[48;5;167m  ";
+$l = "\e[48;5;218m  ";
+$m = "\e[48;5;131m  ";
+$n = "\e[48;5;174m  ";
+
+$the_chara = <<EOC
+          $t
+            $t                                    $a$b$x
+              $t                                $a    $x
+                $t                              $a  $c$x            $d    $x
+                  $t        $d    $e$d$x      $a  $c$a$x        $d          $x
+                      $d    $e$d    $e$d  $x  $a$c$a$x      $d      $f  $d  $x
+                        $d  $e$d    $e$d$e$d$b$a$c$a$x    $d  $f$d  $f  $d  $x
+                        $d    $e$d  $e$d$e$d$e$b$c$a$b$x$d                $x
+                          $d  $e$d$b      $e$d$b$a    $x$d      $a    $d  $x
+                          $d$b    $f      $b    $a$c$b$d    $a  $d      $x
+                      $f  $b$f                  $b$a$b$d  $a$d          $x
+                    $f$g        $f                $b$d  $a$d  $f  $d  $x
+                  $g                $f      $g$f  $g$b$a$d  $f  $d  $x
+                $f$g                    $f    $g$f$g$b$d          $x
+  $h$i$j          $b$g                    $f  $g    $k$b$d  $a  $d$x
+      $h  $i$j      $b$g      $d      $g  $f  $g  $f$k$b$a  $d    $x
+          $h      $i$b$g    $d$a$x  $a$d$g  $f  $g$f$k$b$e$d        $x
+              $h  $f$b$g    $d$x$d$x  $d$g  $f  $g$k  $b$a    $e$d    $x
+              $b    $g      $d$x  $f$x$d$f$g$f  $k    $b$e    $a  $d  $x
+              $g            $d$a$x  $a$d$f$g$f$b  $k$b      $e    $x
+              $g              $d      $f    $b$e  $b  $d    $b$x
+            $l$k    $g            $f    $g$f$c    $e$d      $x
+            $l      $k  $g              $f  $b$e  $a  $d  $b$x
+              $m$l      $k$g        $f    $k  $b  $e  $a$d$b$e$x
+              $e$m  $n$l  $m$d$k$g$k        $m$a$b  $d      $b$e  $x
+                $n$d$m$n$m$d    $m  $k      $m$b$a  $b$x$d    $b$e  $x
+                  $m    $d  $e$a    $m$k  $x  $a    $x      $b$e    $x
+                        $a        $m$x                      $e    $x
+EOC

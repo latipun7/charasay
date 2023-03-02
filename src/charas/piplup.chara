@@ -1,0 +1,40 @@
+# Piplup (Pokemon)
+# by PokemonDB - https://img.pokemondb.net/sprites/sword-shield/icon/piplup.png
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;5;236m  ";
+$b = "\e[48;5;62m  ";
+$c = "\e[48;5;69m  ";
+$d = "\e[48;5;117m  ";
+$e = "\e[48;5;231m  ";
+$f = "\e[48;5;243m  ";
+$g = "\e[48;5;226m  ";
+$h = "\e[48;5;178m  ";
+$i = "\e[48;5;250m  ";
+$j = "\e[48;5;239m  ";
+$k = "\e[48;5;74m  ";
+$l = "\e[48;5;67m  ";
+
+$the_chara = <<EOC
+  $t
+   $t       $a      $x
+    $t  $a  $b$c  $b$a  $x
+      $a$b$c          $b$a$x
+      $a$c              $a$x
+    $a$b$c              $b$a$x
+    $a$c$d$c    $e  $c    $a$x
+    $a$d      $e      $c  $a$x
+      $a$f$d$e  $a$e  $c$a$x
+    $a$g  $f$e  $b$e  $b$a$x
+      $a$h  $i$e  $i$j$a$x
+        $a$j$i    $j  $b$a  $x
+      $a$j$b      $c  $j$b$j$a$x
+      $a$k$j$b$j$c  $j$d$j$b$a$x
+    $a$k$a  $j$d$j  $d    $j$a$x
+    $a  $x$a$e$d$e$j$d    $a$x
+            $a$l$d  $j$d$j$a$x
+          $a$h  $a$l$k$j$k$a$x
+            $a  $x$a$g  $a$x
+                    $a  $x
+EOC

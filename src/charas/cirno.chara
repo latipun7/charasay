@@ -1,0 +1,60 @@
+# Cirno (Touhou) - true color
+# by Unknown - http://pixelartmaker.com/art/5bbf8f8dba64b6a
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;2;0;0;0m  ";
+$b = "\e[48;2;0;34;168m  ";
+$c = "\e[48;2;64;122;218m  ";
+$d = "\e[48;2;116;205;254m  ";
+$e = "\e[48;2;250;250;250m  ";
+$f = "\e[48;2;158;223;255m  ";
+$g = "\e[48;2;46;55;179m  ";
+$h = "\e[48;2;251;214;163m  ";
+$i = "\e[48;2;13;123;219m  ";
+$j = "\e[48;2;138;139;139m  ";
+$k = "\e[48;2;251;221;162m  ";
+$l = "\e[48;2;254;255;254m  ";
+$m = "\e[48;2;247;255;124m  ";
+$n = "\e[48;2;57;57;56m  ";
+$o = "\e[48;2;251;246;134m  ";
+$p = "\e[48;2;123;123;122m  ";
+$q = "\e[48;2;250;235;171m  ";
+$r = "\e[48;2;219;4;4m  ";
+$s = "\e[48;2;158;2;2m  ";
+
+$the_chara = <<EOC
+    $t
+     $t       $a              $x
+      $t    $a$b$c          $b$a    $x$a                $x
+       $t   $a$b  $c  $b        $c$b$a$c            $b  $a$x
+        $t    $a$b    $d        $b          $c    $b    $a$x
+         $t     $a$d                $c      $b        $a$x
+              $a$d                        $c    $b  $a$x
+            $a$d                            $c    $b$a$x
+          $a$d                                $c  $b  $a$x
+          $a$d$e$d                              $c$b    $a  $x
+        $a$d    $e            $d                $c  $b      $a$x
+        $a$d          $c$f    $c$e      $d$b$d  $c  $b    $a$x
+        $a$d$b$d$c$d  $b$c$f    $g$d        $b$d  $c$b$a  $x
+      $a$f$c$a$d$c$b$d$c$b$c  $f$g$c$e$d    $c$b$d$c$a$x
+    $a$f$c$a  $d$c$b$a$c$h$b$c$i$h$g  $c$e$d$c$b$c  $a$x
+    $a    $x$a$c$f$b$j$a$h    $c$h  $a    $d$c      $a$x
+          $a  $c  $b$j$b$k  $h  $a    $l$a$c        $a$x
+        $a$l$m$b$c$b$e$c$k    $h$k$g$e$l$b$f  $b$c  $a$x$a  $x
+        $a$l$m  $b$c$k$b$k        $c$g$k$b$f  $b  $c  $a$f  $a$x
+        $a$m$l$m$b$c$h$k          $g  $k$b$f  $b    $c$b$f  $a$x
+          $a$m  $b$c$b$h$k      $n$k  $h$b$f$b        $c$b$f$a$x
+            $a$m  $b    $h$n    $h    $b  $c$b$f    $o$f  $a$x
+              $a$p  $a$q$a$o$r$o  $b$o$q  $b$f  $o$a      $x
+            $a$p  $a$q$a$b$r$s$r$c  $b$a$q  $a$o    $a$x
+            $a$p$a$q$a$b  $c      $b    $a$q  $a$o  $a$x
+              $a$q$a$b$c          $b      $a$q  $a  $x
+                $a$c            $b          $a  $x
+              $a$o$c$e$c                $b    $a$x
+              $a$o$e    $c$e$c    $e$c  $o$b$o$a$x
+                $a$e          $c$e  $c$o      $a$x
+                  $a  $e  $a$o$e      $o    $a$x
+                      $a  $x$a      $e  $a  $x
+                                    $a  $x
+EOC

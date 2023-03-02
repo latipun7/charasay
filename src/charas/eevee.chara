@@ -1,0 +1,33 @@
+# Eevee (Pokemon)
+# by Bulbapedia - https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_Kanto_Pok%C3%A9dex_number
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;5;179m  ";
+$b = "\e[48;5;240m  ";
+$c = "\e[48;5;137m  ";
+$d = "\e[48;5;185m  ";
+$e = "\e[48;5;230m  ";
+$f = "\e[48;5;238m  ";
+$g = "\e[48;5;231m  ";
+
+$the_chara = <<EOC
+  $t
+   $t
+    $t    $a  $x
+     $t $a$b$a$x  
+        $a$b$c$x        $d  $x    $e$x
+        $b$f  $d$x  $c$d$b$a$f$c$e  $x
+        $f$a$d$a$d$b$a$b  $a$f$c$d$e$x
+      $b$a          $b  $a$f$c    $d$x
+      $g$a          $c$a$f$b$c    $x
+        $a    $c$b$a  $f$b$c$b$x
+      $a      $g$x$a$b$d$b$c  $x
+        $a    $b$x$c$b$d  $b$c$x
+      $e$b  $c    $b$e$d  $b$c  $x
+      $e        $d$e  $d$f$b$c  $x
+        $e$d$e  $d$e$d$b$x  $b$c$x
+          $f$d  $e$b$c$x
+            $c$f  $c$x
+                $a$c$x
+EOC

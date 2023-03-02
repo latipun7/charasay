@@ -1,0 +1,42 @@
+# Ferris1 (Mascot of Rust Programming Language)
+# by u/yngtodd - https://www.reddit.com/r/rust/comments/b9mdll/pixel_ferris_32x32/
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;5;233m  ";
+$b = "\e[48;5;208m  ";
+$c = "\e[48;5;166m  ";
+$d = "\e[48;5;173m  ";
+$e = "\e[48;5;231m  ";
+$f = "\e[48;5;125m  ";
+
+$the_chara = <<EOC
+          $t
+           $t
+            $t
+             $t         $a$x        $a$x
+              $t      $a$b$a$x    $a$b$a$x
+                    $a$c$d$c$a$x$a$c$d$c$a$x
+            $a      $c$b$c$b$c$a$c$b$c$b$c$a      $x
+            $a$b$c$b$d$c$d$c        $d$c$d$b$c$b$a$x
+            $a$c$b$c$d  $c$d        $c$d  $c$b$c$a$x
+        $a    $b$c$d$c$d                $c$d$c$b$a    $x
+        $a$b$c  $d$c$d                    $c$d$c  $b$a$x
+        $a$c  $d$c$d$a  $e  $d    $e  $a  $d$c$d$c  $a$x
+        $a$b$d$c$d  $a  $e  $d    $e  $a  $d  $c$d$b$a$x
+      $a$c  $d      $a      $d    $a      $d      $c  $a$x
+    $a$c$d  $c$d    $a      $d    $a      $d    $c$d  $c$a$x
+  $a$c$d  $c    $d                            $c    $d  $c$a$x
+  $a$c$d    $c$d  $c$d  $a            $d  $c$d  $c$d    $c$a$x
+  $a$c$d                  $a        $d                  $c$a$x
+  $a$c$d$c$a$c$d$c$d$c$d    $f    $d    $c$d$c$d$c$a$c$d$c$a$x
+  $a$c  $a$x$a$c                                $a$x$a$c  $a$x
+  $a      $x  $a$c    $a                $c    $a$x  $a      $x
+              $a$c    $a$x            $a$c    $a$x
+              $a$d$c$d  $a  $x    $a  $d  $c$d$a$x
+                $a$d$c      $a$x$a$c      $d$a$x
+                $a$c      $a$x    $a$c      $a$x
+                  $a$c  $a$x        $a$c  $a$x
+                    $a$c  $a$x    $a$c  $a$x
+                      $a  $x        $a  $x
+EOC

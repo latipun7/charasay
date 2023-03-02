@@ -1,0 +1,60 @@
+# Togepi (Pokemon)
+# by PokemonDB - https://img.pokemondb.net/sprites/sword-shield/icon/togepi.png
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;5;228m  ";
+$b = "\e[48;5;240m  ";
+$c = "\e[48;5;137m  ";
+$d = "\e[48;5;94m  ";
+$e = "\e[48;5;179m  ";
+$f = "\e[48;5;143m  ";
+$g = "\e[48;5;185m  ";
+$h = "\e[48;5;186m  ";
+$i = "\e[48;5;101m  ";
+$j = "\e[48;5;231m  ";
+$k = "\e[48;5;232m  ";
+$l = "\e[48;5;230m  ";
+$m = "\e[48;5;144m  ";
+$n = "\e[48;5;238m  ";
+$o = "\e[48;5;211m  ";
+$p = "\e[48;5;244m  ";
+$q = "\e[48;5;250m  ";
+$r = "\e[48;5;229m  ";
+$s = "\e[48;5;245m  ";
+$u = "\e[48;5;216m  ";
+$v = "\e[48;5;131m  ";
+$w = "\e[48;5;111m  ";
+$y = "\e[48;5;247m  ";
+$z = "\e[48;5;95m  ";
+$A = "\e[48;5;181m  ";
+$B = "\e[48;5;69m  ";
+$C = "\e[48;5;110m  ";
+$D = "\e[48;5;195m  ";
+$E = "\e[48;5;88m  ";
+$F = "\e[48;5;152m  ";
+$G = "\e[48;5;166m  ";
+$H = "\e[48;5;237m  ";
+$I = "\e[48;5;59m  ";
+$J = "\e[48;5;180m  ";
+
+$the_chara = <<EOC
+   $t
+    $t
+     $t     $a  $x
+          $b$c$d$b$x$a  $x
+      $a$b$e$b$a$b$c  $e$x
+      $a  $b$a  $e$b$e$b$f$a$x
+      $g$h$g$a    $d$b$a  $e$x
+      $i$h$j$a  $e$a      $e$x
+        $a$k$a  $l$m$a  $e$b$x
+      $n$f$a$o$a$k$m$a$e  $x
+  $e$n$j$n$p  $q$r  $n$m$n$j$x
+    $n$j$q$j  $n$s$n$l$n$j  $x
+      $u$j      $s$j      $n$x
+      $v$q$j$w  $j      $y  $a$x
+        $z$A$B$j$C$l$D$A$q$x
+        $E$A$B  $F  $G$A$H$x
+        $e$b$x$q    $i$n$x
+                  $I$J$k$x
+EOC

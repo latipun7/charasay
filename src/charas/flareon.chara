@@ -1,0 +1,36 @@
+# Flareon (Pokemon)
+# by Bulbapedia - https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_Kanto_Pok%C3%A9dex_number
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts";
+$a = "\e[48;5;167m  ";
+$b = "\e[48;5;231m  ";
+$c = "\e[48;5;228m  ";
+$d = "\e[48;5;238m  ";
+$e = "\e[48;5;209m  ";
+$f = "\e[48;5;131m  ";
+$g = "\e[48;5;179m  ";
+$h = "\e[48;5;243m  ";
+
+$the_chara = <<EOC
+  $t
+   $t         $a$x
+    $t        $a$x
+     $t     $a    $x                $b  $c$x
+      $t    $d$a  $x          $e$x    $c$b$c$x
+            $b$f$a$x        $e  $x  $c    $b$x
+          $g$b$c$x      $e  $h  $e$d$c    $g$c  $x
+        $c$b$c  $x    $e  $d  $e$d$c          $x
+        $c      $a$e$d$e$d    $e$d$c        $g$x
+      $d$a$c  $a$e      $d  $e$d$g  $c    $g  $x
+      $b$e$a  $e      $a$e  $d  $g          $x
+        $e    $f$d$e$a$f  $c$f$a$f$g    $x
+      $e    $f$b$x$e$a$f$c$f$a    $x
+        $a$e  $x  $a$f$c    $f$a  $x
+      $b$d  $f$a  $c      $g$d$a    $x
+      $b  $c              $x  $a    $x
+        $b  $c        $g$x      $f$a$x
+          $f$c    $d  $x
+          $a$d  $f$a  $x
+              $e$a$e$x
+EOC
