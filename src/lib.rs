@@ -7,7 +7,7 @@ use textwrap::fill;
 use unicode_width::UnicodeWidthStr;
 
 #[derive(RustEmbed, Debug)]
-#[folder = "$CARGO_MANIFEST_DIR/src/charas"]
+#[folder = "src/charas"]
 struct Asset;
 
 struct SpeechBubble {
@@ -206,5 +206,5 @@ pub fn format_character(messages: &str, chara: &String, max_width: usize, think:
 pub fn list_chara() -> Vec<String> {
     Asset::iter()
         .map(|file| file.as_ref().replace(".chara", ""))
-        .collect::<Vec<String>>()
+        .collect()
 }

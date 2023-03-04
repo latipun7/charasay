@@ -1,4 +1,7 @@
-use std::io::{stdin, stdout, Read};
+use std::{
+    io::{stdin, stdout, Read},
+    path::PathBuf,
+};
 
 use charasay::{format_character, list_chara};
 use clap::{Command, CommandFactory, Parser, Subcommand};
@@ -7,17 +10,17 @@ use rand::seq::SliceRandom;
 use textwrap::termwidth;
 
 #[derive(Parser, Debug)]
-#[command(author, version, about, long_about)]
+#[command(author, version, about, long_about, name = "chara")]
 struct Cli {
     #[command(subcommand)]
-    subcommands: Subcommands,
+    command: Commands,
 }
 
 #[derive(Subcommand, Debug)]
-enum Subcommands {
+enum Commands {
     /// Make the character say something.
     Say {
-        /// Messages that chara want to say/think. If empty, read from STDIN.
+        /// Messages that chara want to say/think. If empty, read from standard input.
         message: Vec<String>,
 
         /// Choose random chara.
@@ -36,7 +39,7 @@ enum Subcommands {
         #[arg(short, long)]
         width: Option<usize>,
 
-        /// Which chara should say/think
+        /// Which chara should say/think.
         #[arg(short = 'f', long = "file")]
         chara: Option<String>,
     },
@@ -49,19 +52,22 @@ enum Subcommands {
     },
 
     /// TODO: Convert pixel-arts PNG to chara files.
-    Convert,
+    Convert {
+        /// PNG file path.
+        image: PathBuf,
+    },
 }
 
 fn print_completions<G: Generator>(gen: G, cmd: &mut Command) {
-    generate(gen, cmd, "chara".to_string(), &mut stdout());
+    generate(gen, cmd, cmd.get_name().to_string(), &mut stdout());
 }
 
 fn main() {
     let cli = Cli::parse();
 
     // Run subcommands if match
-    match cli.subcommands {
-        Subcommands::Say {
+    match cli.command {
+        Commands::Say {
             message,
             random,
             all,
@@ -110,7 +116,7 @@ fn main() {
             }
         }
 
-        Subcommands::Completions { shell } => {
+        Commands::Completions { shell } => {
             let mut cmd = Cli::command();
             let gen = match shell {
                 Some(s) => s,
@@ -120,6 +126,6 @@ fn main() {
             print_completions(gen, &mut cmd);
         }
 
-        Subcommands::Convert => {}
+        Commands::Convert { image: _ } => {}
     }
 }

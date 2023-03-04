@@ -24,9 +24,29 @@ while this make us all happy 😁.
 
 ## Installation
 
+### AUR
+
+For Arch Linux, package available via AUR. Example install this with AUR helper:
+
+```console
+yay -S charasay
+```
+
+### Cargo
+
+If you have `rustup` or `cargo`, this tool available on crates.io. Install this with:
+
+```console
+cargo install charasay
+```
+
+### Manual
+
 Just donwload from the [release page](https://github.com/latipun7/charasay/releases)
 for your compatible Operating System, then extract the zip archive, give permission
 to execute on extracted file, then place it on your `PATH`.
+
+Alternatively, clone this repository, then build this with `cargo build --release`.
 
 ### Prerequisites
 
@@ -65,8 +85,8 @@ on how to add completions.
 
 For updated usage please consult to help command.
 
-```sh
-❯ chara --help # example output
+```console
+$ chara --help
 The future of cowsay 🐮! Colorful characters saying something 🗨️.
 
 Usage: chara <COMMAND>
@@ -82,8 +102,8 @@ Options:
 -V, --version  Print version
 ```
 
-```sh
-❯ chara help say # example output
+```console
+$ chara help say
 Make the character say something
 
 Usage: chara say [OPTIONS] [MESSAGE]...

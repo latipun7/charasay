@@ -1,11 +1,12 @@
 [package]
 name = "charasay"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["Latif Sulistyo <latifsulistyo.me@gmail.com>"]
 edition = "2021"
 description = "The future of cowsay 🐮! Colorful characters saying something 🗨️."
 repository = "https://github.com/latipun7/charasay"
 license = "MIT"
+readme = "readme.md"
 keywords = ["cowsay", "print", "ansi"]
 categories = [
   "command-line-utilities",
@@ -21,7 +22,7 @@ name = "chara"
 [dependencies]
 clap = { version = "4.1.8", features = ["derive"] }
 clap_complete = "4.1.4"
-rust-embed = { version = "6.4.2", features = ["interpolate-folder-path"] }
+rust-embed = { version = "6.4.2", features = ["debug-embed"] }
 textwrap = { version = "0.16.0", features = ["terminal_size"] }
 unicode-width = "0.1.10"
 regex = "1.7.1"
