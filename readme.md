@@ -136,7 +136,7 @@ Options:
 
 [discord-image]: https://img.shields.io/discord/758271814153011201?label=Developers%20Indonesia&logo=discord&style=flat-square
 [discord-url]: https://discord.gg/njSj2Nq "Chat and discuss at Developers Indonesia"
-[workflow-image]: https://img.shields.io/github/actions/workflow/status/latipun7/charasay/gh-release.yml?label=Build%20Release&logo=github-actions&style=flat-square
+[workflow-image]: https://img.shields.io/github/actions/workflow/status/latipun7/charasay/ci-cd.yml?label=CI%2FCD&logo=github-actions&style=flat-square
 [workflow-url]: https://github.com/latipun7/charasay/actions "GitHub Actions"
 [ponysay]: https://github.com/erkin/ponysay "Ponysay GitHub Repository"
 [cowsay-converter]: https://charc0al.github.io/cowsay-files/converter/ "Cowsay File Converter"
