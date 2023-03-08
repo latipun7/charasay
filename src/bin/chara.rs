@@ -3,7 +3,7 @@ use std::{
     path::PathBuf,
 };
 
-use charasay::{format_character, list_chara};
+use charasay::{create_speech_bubble, format_character, list_chara};
 use clap::{Command, CommandFactory, Parser, Subcommand};
 use clap_complete::{generate, Generator, Shell};
 use rand::seq::SliceRandom;
@@ -50,6 +50,9 @@ enum Commands {
         #[arg(short, long, value_enum)]
         shell: Option<Shell>,
     },
+
+    /// List all built-in charas.
+    List,
 
     /// TODO: Convert pixel-arts PNG to chara files.
     Convert {
@@ -126,6 +129,11 @@ fn main() {
             print_completions(gen, &mut cmd);
         }
 
-        Commands::Convert { image: _ } => {}
+        Commands::List => {
+            let charas = list_chara().join(" ");
+            print!("{}", create_speech_bubble(&charas, termwidth() - 6, false))
+        }
+
+        Commands::Convert { image: _ } => todo!(),
     }
 }

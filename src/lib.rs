@@ -72,7 +72,7 @@ fn longest_line(lines: &[&str]) -> usize {
     lines.iter().map(|line| line_len(line)).max().unwrap_or(0)
 }
 
-fn create_speech_bubble(messages: &str, max_width: usize, think: bool) -> String {
+pub fn create_speech_bubble(messages: &str, max_width: usize, think: bool) -> String {
     let mut write_buffer = Vec::new();
 
     let speech_bubble: SpeechBubble = if think { THINK_BUBBLE } else { ROUND_BUBBLE };
