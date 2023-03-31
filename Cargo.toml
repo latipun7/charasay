@@ -22,7 +22,7 @@ name = "chara"
 [dependencies]
 clap = { version = "4.1.8", features = ["derive"] }
 clap_complete = "4.1.5"
-rust-embed = { version = "6.6.0", features = ["debug-embed"] }
+rust-embed = { version = "6.6.1", features = ["debug-embed"] }
 textwrap = { version = "0.16.0", features = ["terminal_size"] }
 unicode-width = "0.1.10"
 regex = "1.7.3"
