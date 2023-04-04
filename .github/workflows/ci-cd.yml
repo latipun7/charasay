@@ -29,7 +29,6 @@ jobs:
           restore-keys: |
             cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
             cargo-${{ runner.os }}-
-            cargo-
 
       - name: 🎨 Check Formatting
         run: cargo fmt --check --all
