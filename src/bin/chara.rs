@@ -3,7 +3,7 @@ use std::{
     path::PathBuf,
 };
 
-use charasay::{create_speech_bubble, format_character, list_chara};
+use charasay::{format_character, list_chara};
 use clap::{Command, CommandFactory, Parser, Subcommand};
 use clap_complete::{generate, Generator, Shell};
 use rand::seq::SliceRandom;
@@ -131,7 +131,7 @@ fn main() {
 
         Commands::List => {
             let charas = list_chara().join(" ");
-            print!("{}", create_speech_bubble(&charas, termwidth() - 6, false))
+            println!("{}", charas)
         }
 
         Commands::Convert { image: _ } => todo!(),

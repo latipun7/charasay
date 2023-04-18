@@ -10,6 +10,13 @@ use unicode_width::UnicodeWidthStr;
 #[folder = "src/charas"]
 struct Asset;
 
+#[derive(Debug)]
+enum BubbleType {
+    Think,
+    Round,
+}
+
+#[derive(Debug)]
 struct SpeechBubble {
     corner_top_left: &'static str,
     top: &'static str,
@@ -27,107 +34,148 @@ struct SpeechBubble {
     short_right: &'static str,
 }
 
-const SPACE: &str = " ";
-const ROUND_BUBBLE: SpeechBubble = SpeechBubble {
-    corner_top_left: "╭",
-    top: "─",
-    corner_top_right: "╮\n",
-    top_right: "  │\n",
-    right: "  │\n",
-    bottom_right: "  │\n",
-    corner_bottom_right: "╯\n",
-    bottom: "─",
-    corner_bottom_left: "╰",
-    bottom_left: "│  ",
-    left: "│  ",
-    top_left: "│  ",
-    short_left: "│  ",
-    short_right: "  │\n",
-};
-const THINK_BUBBLE: SpeechBubble = SpeechBubble {
-    corner_top_left: "(",
-    top: "⁀",
-    corner_top_right: ")\n",
-    top_right: "  )\n",
-    right: "  )\n",
-    bottom_right: "  )\n",
-    corner_bottom_right: ")\n",
-    bottom: "‿",
-    corner_bottom_left: "(",
-    bottom_left: "(  ",
-    left: "(  ",
-    top_left: "(  ",
-    short_left: "(  ",
-    short_right: "  )\n",
-};
+impl SpeechBubble {
+    fn new(bubble_type: BubbleType) -> Self {
+        let corner_top_left;
+        let top;
+        let corner_top_right;
+        let top_right;
+        let right;
+        let bottom_right;
+        let corner_bottom_right;
+        let bottom;
+        let corner_bottom_left;
+        let bottom_left;
+        let left;
+        let top_left;
+        let short_left;
+        let short_right;
 
-fn line_len(line: &str) -> usize {
-    let stripped = strip(line).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
-    let text = from_utf8(stripped.as_slice()).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
+        match bubble_type {
+            BubbleType::Think => {
+                corner_top_left = "(";
+                top = "⁀";
+                corner_top_right = ")\n";
+                top_right = "  )\n";
+                right = "  )\n";
+                bottom_right = "  )\n";
+                corner_bottom_right = ")\n";
+                bottom = "‿";
+                corner_bottom_left = "(";
+                bottom_left = "(  ";
+                left = "(  ";
+                top_left = "(  ";
+                short_left = "(  ";
+                short_right = "  )\n";
+            }
+            BubbleType::Round => {
+                corner_top_left = "╭";
+                top = "─";
+                corner_top_right = "╮\n";
+                top_right = "  │\n";
+                right = "  │\n";
+                bottom_right = "  │\n";
+                corner_bottom_right = "╯\n";
+                bottom = "─";
+                corner_bottom_left = "╰";
+                bottom_left = "│  ";
+                left = "│  ";
+                top_left = "│  ";
+                short_left = "│  ";
+                short_right = "  │\n";
+            }
+        };
 
-    UnicodeWidthStr::width(text)
-}
-
-fn longest_line(lines: &[&str]) -> usize {
-    lines.iter().map(|line| line_len(line)).max().unwrap_or(0)
-}
-
-pub fn create_speech_bubble(messages: &str, max_width: usize, think: bool) -> String {
-    let mut write_buffer = Vec::new();
-
-    let speech_bubble: SpeechBubble = if think { THINK_BUBBLE } else { ROUND_BUBBLE };
-
-    // for computing messages length
-    let wrapped = fill(messages, max_width).replace('\t', "    ");
-    let lines: Vec<&str> = wrapped.lines().collect();
-    let line_count = lines.len();
-    let actual_width = longest_line(&lines);
-
-    // draw top box border
-    write_buffer.push(speech_bubble.corner_top_left);
-    for _ in 0..(actual_width + 4) {
-        write_buffer.push(speech_bubble.top);
-    }
-    write_buffer.push(speech_bubble.corner_top_right);
-
-    // draw inner message each line
-    for (i, line) in lines.into_iter().enumerate() {
-        // left border
-        if line_count == 1 {
-            write_buffer.push(speech_bubble.short_left);
-        } else if i == 0 {
-            write_buffer.push(speech_bubble.top_left);
-        } else if i == line_count - 1 {
-            write_buffer.push(speech_bubble.bottom_left);
-        } else {
-            write_buffer.push(speech_bubble.left);
-        }
-
-        // text line
-        let line_len = line_len(line);
-        write_buffer.push(line);
-        write_buffer.resize(write_buffer.len() + actual_width - line_len, SPACE);
-
-        // right border
-        if line_count == 1 {
-            write_buffer.push(speech_bubble.short_right);
-        } else if i == 0 {
-            write_buffer.push(speech_bubble.top_right);
-        } else if i == line_count - 1 {
-            write_buffer.push(speech_bubble.bottom_right);
-        } else {
-            write_buffer.push(speech_bubble.right);
+        Self {
+            corner_top_left,
+            top,
+            corner_top_right,
+            top_right,
+            right,
+            bottom_right,
+            corner_bottom_right,
+            bottom,
+            corner_bottom_left,
+            bottom_left,
+            left,
+            top_left,
+            short_left,
+            short_right,
         }
     }
 
-    // draw bottom box border
-    write_buffer.push(speech_bubble.corner_bottom_left);
-    for _ in 0..(actual_width + 4) {
-        write_buffer.push(speech_bubble.bottom);
-    }
-    write_buffer.push(speech_bubble.corner_bottom_right);
+    fn line_len(line: &str) -> usize {
+        let stripped = strip(line).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
+        let text =
+            from_utf8(stripped.as_slice()).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
 
-    write_buffer.join("")
+        UnicodeWidthStr::width(text)
+    }
+
+    fn longest_line(lines: &[&str]) -> usize {
+        lines
+            .iter()
+            .map(|line| Self::line_len(line))
+            .max()
+            .unwrap_or(0)
+    }
+
+    fn create(self, messages: &str, max_width: &usize) -> String {
+        const SPACE: &str = " ";
+        let mut write_buffer = Vec::new();
+
+        // for computing messages length
+        let wrapped = fill(messages, *max_width).replace('\t', "    ");
+        let lines: Vec<&str> = wrapped.lines().collect();
+        let line_count = lines.len();
+        let actual_width = Self::longest_line(&lines);
+
+        // draw top box border
+        write_buffer.push(self.corner_top_left);
+        for _ in 0..(actual_width + 4) {
+            write_buffer.push(self.top);
+        }
+        write_buffer.push(self.corner_top_right);
+
+        // draw inner message each line
+        for (i, line) in lines.into_iter().enumerate() {
+            // left border
+            if line_count == 1 {
+                write_buffer.push(self.short_left);
+            } else if i == 0 {
+                write_buffer.push(self.top_left);
+            } else if i == line_count - 1 {
+                write_buffer.push(self.bottom_left);
+            } else {
+                write_buffer.push(self.left);
+            }
+
+            // text line
+            let line_len = Self::line_len(line);
+            write_buffer.push(line);
+            write_buffer.resize(write_buffer.len() + actual_width - line_len, SPACE);
+
+            // right border
+            if line_count == 1 {
+                write_buffer.push(self.short_right);
+            } else if i == 0 {
+                write_buffer.push(self.top_right);
+            } else if i == line_count - 1 {
+                write_buffer.push(self.bottom_right);
+            } else {
+                write_buffer.push(self.right);
+            }
+        }
+
+        // draw bottom box border
+        write_buffer.push(self.corner_bottom_left);
+        for _ in 0..(actual_width + 4) {
+            write_buffer.push(self.bottom);
+        }
+        write_buffer.push(self.corner_bottom_right);
+
+        write_buffer.join("")
+    }
 }
 
 fn parse_character(chara: &String, voice_line: &str) -> String {
@@ -195,11 +243,18 @@ fn parse_character(chara: &String, voice_line: &str) -> String {
 /// Format arguments to form complete charasay
 pub fn format_character(messages: &str, chara: &String, max_width: usize, think: bool) -> String {
     let voice_line = if think { "o" } else { "╲" };
+    let bubble_type = if think {
+        BubbleType::Think
+    } else {
+        BubbleType::Round
+    };
 
-    let speech_bubble = create_speech_bubble(messages, max_width, think);
+    let speech_bubble = SpeechBubble::new(bubble_type);
+
+    let speech = speech_bubble.create(messages, &max_width);
     let character = parse_character(chara, voice_line);
 
-    format!("{}{}", speech_bubble, character)
+    format!("{}{}", speech, character)
 }
 
 /// List all characters name from asset
