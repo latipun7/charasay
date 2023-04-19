@@ -178,8 +178,7 @@ impl SpeechBubble {
     }
 }
 
-fn parse_character(chara: &String, voice_line: &str) -> String {
-    // get raw text from file or asset
+fn load_raw_chara_string(chara: &str) -> String {
     let mut raw_chara = String::new();
     match chara.contains(".chara") {
         true => {
@@ -196,7 +195,11 @@ fn parse_character(chara: &String, voice_line: &str) -> String {
         }
     }
 
-    let stripped_chara = raw_chara
+    raw_chara
+}
+
+fn strip_chara_string(raw_chara: &str) -> String {
+    raw_chara
         .split('\n')
         .filter(|line| {
             !line.starts_with('#')
@@ -206,7 +209,12 @@ fn parse_character(chara: &String, voice_line: &str) -> String {
         })
         .collect::<Vec<_>>()
         .join("\n")
-        .replace("\\e", "\x1B");
+        .replace("\\e", "\x1B")
+}
+
+fn parse_character(chara: &str, voice_line: &str) -> String {
+    let raw_chara = load_raw_chara_string(chara);
+    let stripped_chara = strip_chara_string(&raw_chara);
 
     // extract variable definition to HashMap
     let re = Regex::new(r"(?P<var>\$\w).*=.*(?P<val>\x1B\[.*m\s*).;").unwrap();
@@ -241,7 +249,7 @@ fn parse_character(chara: &String, voice_line: &str) -> String {
 }
 
 /// Format arguments to form complete charasay
-pub fn format_character(messages: &str, chara: &String, max_width: usize, think: bool) -> String {
+pub fn format_character(messages: &str, chara: &str, max_width: usize, think: bool) -> String {
     let voice_line = if think { "o" } else { "╲" };
     let bubble_type = if think {
         BubbleType::Think
