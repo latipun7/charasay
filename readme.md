@@ -32,6 +32,12 @@ For Arch Linux, package available via AUR. Example install this with AUR helper:
 yay -S charasay
 ```
 
+or
+
+```console
+yay -S charasay-bin
+```
+
 ### Cargo
 
 If you have `rustup` or `cargo`, this tool available on crates.io. Install this with:
