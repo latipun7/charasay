@@ -1,4 +1,4 @@
-use std::{collections::HashMap, fs::File, io::Read, str::from_utf8};
+use std::{collections::HashMap, fs::File, io::Read, path::PathBuf, str::from_utf8};
 
 use regex::Regex;
 use rust_embed::RustEmbed;
@@ -15,6 +15,40 @@ enum BubbleType {
     Think,
     Round,
 }
+
+/// Source chara to load, either builtin or from external file.
+#[derive(Debug)]
+pub enum Chara {
+    Builtin(String),
+    File(PathBuf),
+}
+
+/// All built-in characters name.
+pub const BUILTIN_CHARA: [&str; 23] = [
+    "aya",
+    "cirno",
+    "clefairy",
+    "cow",
+    "eevee",
+    "ferris",
+    "ferris1",
+    "flareon",
+    "goldeen",
+    "growlithe",
+    "kirby",
+    "kitten",
+    "mario",
+    "mew",
+    "nemo",
+    "pikachu",
+    "piplup",
+    "psyduck",
+    "remilia-scarlet",
+    "seaking",
+    "togepi",
+    "tux",
+    "wartortle",
+];
 
 #[derive(Debug)]
 struct SpeechBubble {
@@ -178,16 +212,18 @@ impl SpeechBubble {
     }
 }
 
-fn load_raw_chara_string(chara: &str) -> String {
+fn load_raw_chara_string(chara: &Chara) -> String {
     let mut raw_chara = String::new();
-    match chara.contains(".chara") {
-        true => {
-            let mut file = File::open(chara).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
+
+    match chara {
+        Chara::File(s) => {
+            let mut file = File::open(s).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
             file.read_to_string(&mut raw_chara)
                 .unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
         }
-        false => {
-            let name = format!("{}.chara", &chara);
+
+        Chara::Builtin(s) => {
+            let name = format!("{}.chara", s);
             let asset = Asset::get(&name).unwrap();
             raw_chara = from_utf8(&asset.data)
                 .unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err))
@@ -212,7 +248,7 @@ fn strip_chara_string(raw_chara: &str) -> String {
         .replace("\\e", "\x1B")
 }
 
-fn parse_character(chara: &str, voice_line: &str) -> String {
+fn parse_character(chara: &Chara, voice_line: &str) -> String {
     let raw_chara = load_raw_chara_string(chara);
     let stripped_chara = strip_chara_string(&raw_chara);
 
@@ -249,7 +285,7 @@ fn parse_character(chara: &str, voice_line: &str) -> String {
 }
 
 /// Format arguments to form complete charasay
-pub fn format_character(messages: &str, chara: &str, max_width: usize, think: bool) -> String {
+pub fn format_character(messages: &str, chara: &Chara, max_width: usize, think: bool) -> String {
     let voice_line = if think { "o" } else { "╲" };
     let bubble_type = if think {
         BubbleType::Think
@@ -265,9 +301,7 @@ pub fn format_character(messages: &str, chara: &str, max_width: usize, think: bo
     format!("{}{}", speech, character)
 }
 
-/// List all characters name from asset
-pub fn list_chara() -> Vec<String> {
-    Asset::iter()
-        .map(|file| file.as_ref().replace(".chara", ""))
-        .collect()
+/// Print only the character
+pub fn print_character(chara: &Chara) -> String {
+    parse_character(chara, " ")
 }
