@@ -3,8 +3,8 @@ use std::{
     path::PathBuf,
 };
 
-use charasay::{format_character, list_chara};
-use clap::{Command, CommandFactory, Parser, Subcommand};
+use charasay::{format_character, Chara, BUILTIN_CHARA};
+use clap::{Args, Command, CommandFactory, Parser, Subcommand};
 use clap_complete::{generate, Generator, Shell};
 use rand::seq::SliceRandom;
 use textwrap::termwidth;
@@ -18,18 +18,10 @@ struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Commands {
-    /// Make the character say something.
+    /// Make the character say something. Default to cow.
     Say {
         /// Messages that chara want to say/think. If empty, read from standard input.
         message: Vec<String>,
-
-        /// Choose random chara.
-        #[arg(short, long)]
-        random: bool,
-
-        /// Print all available chara.
-        #[arg(short, long)]
-        all: bool,
 
         /// Make chara only thinking about it, not saying it.
         #[arg(short, long)]
@@ -39,9 +31,8 @@ enum Commands {
         #[arg(short, long)]
         width: Option<usize>,
 
-        /// Which chara should say/think.
-        #[arg(short = 'f', long = "file")]
-        chara: Option<String>,
+        #[command(flatten)]
+        charas: Charas,
     },
 
     /// Generate completions for shell. Default to current shell.
@@ -54,11 +45,37 @@ enum Commands {
     /// List all built-in charas.
     List,
 
+    /// Print only the character. Default to cow.
+    Print {
+        #[command(flatten)]
+        charas: Charas,
+    },
+
     /// TODO: Convert pixel-arts PNG to chara files.
     Convert {
         /// PNG file path.
         image: PathBuf,
     },
+}
+
+#[derive(Args, Debug)]
+#[group(multiple = false)]
+struct Charas {
+    /// Choose built-in chara.
+    #[arg(short, long, value_parser = BUILTIN_CHARA)]
+    chara: Option<String>,
+
+    /// Choose custom chara file.
+    #[arg(short, long)]
+    file: Option<PathBuf>,
+
+    /// Choose random chara.
+    #[arg(short, long)]
+    random: bool,
+
+    /// Print all built-in charas.
+    #[arg(short, long)]
+    all: bool,
 }
 
 fn print_completions<G: Generator>(gen: G, cmd: &mut Command) {
@@ -68,15 +85,12 @@ fn print_completions<G: Generator>(gen: G, cmd: &mut Command) {
 fn main() {
     let cli = Cli::parse();
 
-    // Run subcommands if match
     match cli.command {
         Commands::Say {
             message,
-            random,
-            all,
             think,
             width,
-            chara,
+            charas,
         } => {
             let mut messages = message.join(" ");
 
@@ -95,21 +109,31 @@ fn main() {
                 None => termwidth() - 6,
             };
 
-            if all {
-                let charas = list_chara();
+            if charas.all {
+                let charas = BUILTIN_CHARA;
                 for chara in charas {
                     println!("\n\n{}", chara);
                     println!(
                         "{}",
-                        format_character(messages.as_str(), &chara, max_width, think)
+                        format_character(
+                            messages.as_str(),
+                            &Chara::Builtin(chara.to_string()),
+                            max_width,
+                            think
+                        )
                     );
                 }
             } else {
-                let chara = if random {
-                    let charas = list_chara();
-                    charas.choose(&mut rand::thread_rng()).unwrap().to_owned()
+                let chara = if charas.random {
+                    let charas = BUILTIN_CHARA;
+                    let choosen_chara = charas.choose(&mut rand::thread_rng()).unwrap().to_owned();
+                    Chara::Builtin(choosen_chara.to_string())
+                } else if let Some(s) = charas.chara {
+                    Chara::Builtin(s)
+                } else if let Some(path) = charas.file {
+                    Chara::File(path)
                 } else {
-                    chara.unwrap_or("cow".to_string())
+                    Chara::Builtin("cow".to_string())
                 };
 
                 println!(
@@ -130,8 +154,12 @@ fn main() {
         }
 
         Commands::List => {
-            let charas = list_chara().join(" ");
+            let charas = BUILTIN_CHARA.join(" ");
             println!("{}", charas)
+        }
+
+        Commands::Print { charas: _ } => {
+            todo!()
         }
 
         Commands::Convert { image: _ } => todo!(),
