@@ -21,7 +21,7 @@ name = "chara"
 
 [dependencies]
 clap = { version = "4.2.4", features = ["derive"] }
-clap_complete = "4.2.0"
+clap_complete = "4.2.1"
 rust-embed = { version = "6.6.1", features = ["debug-embed"] }
 textwrap = { version = "0.16.0", features = ["terminal_size"] }
 unicode-width = "0.1.10"
