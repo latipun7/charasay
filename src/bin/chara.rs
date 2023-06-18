@@ -6,8 +6,9 @@ use std::{
 use charasay::{format_character, print_character, Chara, BUILTIN_CHARA};
 use clap::{Args, Command, CommandFactory, Parser, Subcommand};
 use clap_complete::{generate, Generator, Shell};
-use rand::seq::SliceRandom;
 use textwrap::termwidth;
+
+const BORDER_WIDTH: usize = 6;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about, name = "chara")]
@@ -82,6 +83,52 @@ fn print_completions<G: Generator>(gen: G, cmd: &mut Command) {
     generate(gen, cmd, cmd.get_name().to_string(), &mut stdout());
 }
 
+fn print_characters(charas: Charas, messages: String, max_width: usize, think: bool) {
+    if charas.all {
+        print_all_characters(&messages, max_width, think);
+    } else if charas.random {
+        print_random_character(&messages, max_width, think);
+    } else if let Some(s) = &charas.chara {
+        print_specified_character(&messages, s, max_width, think);
+    } else if let Some(path) = &charas.file {
+        print_character_from_file(&messages, path.to_str().unwrap(), max_width, think);
+    } else {
+        let chara = Chara::Builtin("cow".to_string());
+        println!("{}", format_character(&messages, &chara, max_width, think));
+    }
+}
+
+fn print_all_characters(messages: &str, max_width: usize, think: bool) {
+    let charas = BUILTIN_CHARA;
+    for chara in charas {
+        println!("\n\n{}", chara);
+        println!(
+            "{}",
+            format_character(
+                messages,
+                &Chara::Builtin(chara.to_string()),
+                max_width,
+                think
+            )
+        );
+    }
+}
+
+fn print_random_character(messages: &str, max_width: usize, think: bool) {
+    let chara = Chara::Random;
+    println!("{}", format_character(messages, &chara, max_width, think));
+}
+
+fn print_specified_character(messages: &str, chara_name: &str, max_width: usize, think: bool) {
+    let chara = Chara::Builtin(chara_name.to_string());
+    println!("{}", format_character(messages, &chara, max_width, think));
+}
+
+fn print_character_from_file(messages: &str, file_path: &str, max_width: usize, think: bool) {
+    let chara = Chara::File(file_path.into());
+    println!("{}", format_character(messages, &chara, max_width, think));
+}
+
 fn main() {
     let cli = Cli::parse();
 
@@ -104,43 +151,9 @@ fn main() {
                 messages = buffer.trim_end().to_string();
             }
 
-            let max_width = match width {
-                Some(w) => w,
-                None => termwidth() - 6,
-            };
+            let max_width = width.unwrap_or(termwidth() - BORDER_WIDTH);
 
-            if charas.all {
-                let charas = BUILTIN_CHARA;
-                for chara in charas {
-                    println!("\n\n{}", chara);
-                    println!(
-                        "{}",
-                        format_character(
-                            messages.as_str(),
-                            &Chara::Builtin(chara.to_string()),
-                            max_width,
-                            think
-                        )
-                    );
-                }
-            } else {
-                let chara = if charas.random {
-                    let charas = BUILTIN_CHARA;
-                    let choosen_chara = charas.choose(&mut rand::thread_rng()).unwrap().to_owned();
-                    Chara::Builtin(choosen_chara.to_string())
-                } else if let Some(s) = charas.chara {
-                    Chara::Builtin(s)
-                } else if let Some(path) = charas.file {
-                    Chara::File(path)
-                } else {
-                    Chara::Builtin("cow".to_string())
-                };
-
-                println!(
-                    "{}",
-                    format_character(messages.as_str(), &chara, max_width, think)
-                );
-            }
+            print_characters(charas, messages, max_width, think);
         }
 
         Commands::Completions { shell } => {
@@ -159,27 +172,15 @@ fn main() {
         }
 
         Commands::Print { charas } => {
-            if charas.all {
-                let charas = BUILTIN_CHARA;
-                for chara in charas {
-                    println!("\n\n{}", chara);
-                    println!("{}", print_character(&Chara::Builtin(chara.to_string()),));
-                }
-            } else {
-                let chara = if charas.random {
-                    let charas = BUILTIN_CHARA;
-                    let choosen_chara = charas.choose(&mut rand::thread_rng()).unwrap().to_owned();
-                    Chara::Builtin(choosen_chara.to_string())
-                } else if let Some(s) = charas.chara {
-                    Chara::Builtin(s)
-                } else if let Some(path) = charas.file {
-                    Chara::File(path)
-                } else {
-                    Chara::Builtin("cow".to_string())
-                };
+            let chara = match (charas.all, charas.random, charas.chara, charas.file) {
+                (true, _, _, _) => Chara::All,
+                (_, true, _, _) => Chara::Random,
+                (_, _, Some(s), _) => Chara::Builtin(s),
+                (_, _, _, Some(path)) => Chara::File(path),
+                _ => Chara::Builtin("cow".to_string()),
+            };
 
-                println!("{}", print_character(&chara));
-            }
+            println!("{}", print_character(&chara));
         }
 
         Commands::Convert { image: _ } => todo!(),
