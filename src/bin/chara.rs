@@ -166,10 +166,7 @@ fn main() {
                 messages = buffer.trim_end().to_string();
             }
 
-            let max_width = match width {
-                Some(w) => w,
-                None => termwidth() - BORDER_WIDTH,
-            };
+            let max_width = width.unwrap_or(termwidth() - BORDER_WIDTH);
 
             print_characters(charas, messages, max_width, think);
 
