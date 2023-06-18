@@ -1,5 +1,6 @@
 use std::{collections::HashMap, fs::File, io::Read, path::PathBuf, str::from_utf8};
 
+use rand::seq::SliceRandom;
 use regex::Regex;
 use rust_embed::RustEmbed;
 use strip_ansi_escapes::strip;
@@ -231,7 +232,17 @@ fn load_raw_chara_string(chara: &Chara) -> String {
                 .unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err))
                 .to_string();
         }
-        &Chara::All | &Chara::Random => todo!(),
+
+        Chara::All => todo!(),
+
+        Chara::Random => {
+            let charas = Asset::iter().collect::<Vec<_>>();
+            let choosen_chara = charas.choose(&mut rand::thread_rng()).unwrap().clone();
+            let asset = Asset::get(&choosen_chara).unwrap();
+            raw_chara = from_utf8(&asset.data)
+                .unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err))
+                .to_string();
+        }
     }
 
     raw_chara

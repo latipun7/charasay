@@ -6,7 +6,6 @@ use std::{
 use charasay::{format_character, print_character, Chara, BUILTIN_CHARA};
 use clap::{Args, Command, CommandFactory, Parser, Subcommand};
 use clap_complete::{generate, Generator, Shell};
-use rand::seq::SliceRandom;
 use textwrap::termwidth;
 
 const BORDER_WIDTH: usize = 6;
@@ -116,16 +115,12 @@ fn print_all_characters(messages: &str, max_width: usize, think: bool) {
 }
 
 fn print_random_character(messages: &str, max_width: usize, think: bool) {
-    let charas = BUILTIN_CHARA;
-    let choosen_chara = charas.choose(&mut rand::thread_rng()).unwrap().to_owned();
-    let chara = Chara::Builtin(choosen_chara.to_string());
-
+    let chara = Chara::Random;
     println!("{}", format_character(messages, &chara, max_width, think));
 }
 
 fn print_specified_character(messages: &str, chara_name: &str, max_width: usize, think: bool) {
     let chara = Chara::Builtin(chara_name.to_string());
-
     println!("{}", format_character(messages, &chara, max_width, think));
 }
 
