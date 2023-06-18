@@ -20,11 +20,11 @@ categories = [
 name = "chara"
 
 [dependencies]
-clap = { version = "4.2.4", features = ["derive"] }
-clap_complete = "4.2.0"
-rust-embed = { version = "6.6.1", features = ["debug-embed"] }
+clap = { version = "4.3.4", features = ["derive"] }
+clap_complete = "4.3.1"
+rust-embed = { version = "6.7.0", features = ["debug-embed"] }
 textwrap = { version = "0.16.0", features = ["terminal_size"] }
 unicode-width = "0.1.10"
-regex = "1.8.0"
+regex = "1.8.4"
 rand = "0.8.5"
 strip-ansi-escapes = "0.1.1"
