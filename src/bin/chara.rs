@@ -141,7 +141,6 @@ fn print_character_from_file(
     think: bool,
 ) {
     let chara = Chara::File(file_path.into());
-
     println!("{}", format_character(messages, &chara, max_width, think));
 }
 
