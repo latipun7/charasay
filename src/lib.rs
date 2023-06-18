@@ -112,7 +112,7 @@ fn parse_character(chara: &Chara, voice_line: &str) -> String {
 
     for chara in charas {
         // extract variable definition to HashMap
-        let re = Regex::new(r"(?P<var>\$\w).*=.*(?P<val>\x1B\[.*m\s*).;").unwrap();
+        let re = Regex::new(r"(?<var>\$\w).*=.*(?<val>\x1B\[.*m\s*).;").unwrap();
         let replacers: Vec<HashMap<&str, &str>> = re
             .captures_iter(chara)
             .map(|cap| {
