@@ -238,11 +238,7 @@ fn load_raw_chara_string(chara: &Chara) -> String {
                 .map(|file| {
                     let name = file.trim_end_matches(".chara");
                     let asset = Asset::get(&file).unwrap();
-                    format!(
-                        "{} 👇\n{}",
-                        name,
-                        String::from_utf8_lossy(&asset.data).to_string()
-                    )
+                    format!("{} 👇\n{}", name, String::from_utf8_lossy(&asset.data))
                 })
                 .collect::<Vec<_>>();
             raw_chara = charas.join("\n+\n");
