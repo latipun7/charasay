@@ -231,7 +231,7 @@ fn load_raw_chara_string(chara: &Chara) -> String {
                 .unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err))
                 .to_string();
         }
-        &Chara::All | &Chara::Random => todo!()
+        &Chara::All | &Chara::Random => todo!(),
     }
 
     raw_chara
