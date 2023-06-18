@@ -19,8 +19,10 @@ enum BubbleType {
 /// Source chara to load, either builtin or from external file.
 #[derive(Debug)]
 pub enum Chara {
+    All,
     Builtin(String),
     File(PathBuf),
+    Random,
 }
 
 /// All built-in characters name.
@@ -229,6 +231,7 @@ fn load_raw_chara_string(chara: &Chara) -> String {
                 .unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err))
                 .to_string();
         }
+        &Chara::All | &Chara::Random => todo!()
     }
 
     raw_chara

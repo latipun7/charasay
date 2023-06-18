@@ -159,28 +159,16 @@ fn main() {
         }
 
         Commands::Print { charas } => {
-            if charas.all {
-                let charas = BUILTIN_CHARA;
-                for chara in charas {
-                    println!("\n\n{}", chara);
-                    println!("{}", print_character(&Chara::Builtin(chara.to_string()),));
-                }
-            } else {
-                let chara = if charas.random {
-                    let charas = BUILTIN_CHARA;
-                    let choosen_chara = charas.choose(&mut rand::thread_rng()).unwrap().to_owned();
-                    Chara::Builtin(choosen_chara.to_string())
-                } else if let Some(s) = charas.chara {
-                    Chara::Builtin(s)
-                } else if let Some(path) = charas.file {
-                    Chara::File(path)
-                } else {
-                    Chara::Builtin("cow".to_string())
-                };
+        let chara = match (charas.all, charas.random, charas.chara, charas.file) {
+            (true, _, _, _) => Chara::All,
+            (_, true, _, _) => Chara::Random,
+            (_, _, Some(s), _) => Chara::Builtin(s),
+            (_, _, _, Some(path)) => Chara::File(path),
+            _ => Chara::Builtin("cow".to_string()),
+        };
 
-                println!("{}", print_character(&chara));
-            }
-        }
+        println!("{}", print_character(&chara));
+    }
 
         Commands::Convert { image: _ } => todo!(),
     }
