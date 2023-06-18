@@ -286,7 +286,7 @@ fn parse_character(chara: &Chara, voice_line: &str) -> String {
 
 /// Format arguments to form complete charasay
 pub fn format_character(messages: &str, chara: &Chara, max_width: usize, think: bool) -> String {
-    let voice_line = if think { "o" } else { "╲" };
+    let voice_line = if think { "o " } else { "╲ " };
     let bubble_type = if think {
         BubbleType::Think
     } else {
