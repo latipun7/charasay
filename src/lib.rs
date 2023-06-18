@@ -233,7 +233,16 @@ fn load_raw_chara_string(chara: &Chara) -> String {
                 .to_string();
         }
 
-        Chara::All => todo!(),
+        Chara::All => {
+            let charas = Asset::iter()
+                .map(|asset| {
+                    let name = format!("{}.chara", asset);
+                    let asset = Asset::get(&name).unwrap();
+                    String::from_utf8_lossy(&asset.data).to_string()
+                })
+                .collect::<Vec<_>>();
+            raw_chara = charas.join("\n");
+        },
 
         Chara::Random => {
             let charas = Asset::iter().collect::<Vec<_>>();
