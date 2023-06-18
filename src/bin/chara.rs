@@ -9,6 +9,8 @@ use clap_complete::{generate, Generator, Shell};
 use rand::seq::SliceRandom;
 use textwrap::termwidth;
 
+const BORDER_WIDTH: usize = 6;
+
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about, name = "chara")]
 struct Cli {
@@ -106,7 +108,7 @@ fn main() {
 
             let max_width = match width {
                 Some(w) => w,
-                None => termwidth() - 6,
+                None => termwidth() - BORDER_WIDTH,
             };
 
             if charas.all {
