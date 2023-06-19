@@ -146,7 +146,10 @@ fn main() {
 
                 stdin()
                     .read_to_string(&mut buffer)
-                    .unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
+                    .unwrap_or_else(|err| {
+                        eprintln!("Failed to read input from standard input: {}", err);
+                        std::process::exit(1);
+                    });
 
                 messages = buffer.trim_end().to_string();
             }
