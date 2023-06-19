@@ -1,6 +1,7 @@
 use std::{
+    error::Error,
     io::{stdin, stdout, Read},
-    path::PathBuf, error::Error,
+    path::PathBuf,
 };
 
 use charasay::{format_character, print_character, Chara, BUILTIN_CHARA};
@@ -131,6 +132,7 @@ fn print_character_from_file(messages: &str, file_path: &str, max_width: usize, 
 
 fn read_input(message: Vec<String>) -> Result<String, Box<dyn Error>> {
     let mut messages = message.join(" ");
+
     if messages.is_empty() {
         let mut buffer = String::new();
 
@@ -140,6 +142,7 @@ fn read_input(message: Vec<String>) -> Result<String, Box<dyn Error>> {
 
         messages = buffer.trim_end().to_string();
     }
+
     Ok(messages)
 }
 
@@ -156,7 +159,7 @@ fn main() {
             let messages = match read_input(message) {
                 Ok(s) => s,
                 Err(err) => {
-                    eprintln!("Failed to read input: {}", err);
+                    eprintln!("Failed to read input: {:#?}", err);
                     std::process::exit(1);
                 }
             };
