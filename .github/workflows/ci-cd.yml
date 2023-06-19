@@ -19,6 +19,11 @@ jobs:
       - name: 🛎️ Checkout
         uses: actions/checkout@v3.5.3
 
+      - name: 🦀 Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
       - name: ♻️ Manage Cache
         uses: actions/cache@v3.3.1
         with:
@@ -68,7 +73,12 @@ jobs:
       - name: 🛎️ Checkout
         uses: actions/checkout@v3.5.3
 
-      - name: 🔗 Install Linker Packages
+      - name: 🦀 Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          target: ${{ matrix.cargo-target }}
+
+      - name: 🔗 Install Linker packages
         if: matrix.linker != ''
         run: |
           sudo apt-get -y update
@@ -77,9 +87,6 @@ jobs:
       - name: 🛣️ Set Linker Path
         if: matrix.cargo-target == 'aarch64-linux-android'
         run: echo "$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin" >> $GITHUB_PATH
-
-      - name: 🎯 Add Rustup Target
-        run: rustup target add ${{ matrix.cargo-target }}
 
       - name: ♻️ Manage Build Cache
         uses: actions/cache@v3.3.1
