@@ -1,4 +1,5 @@
 use std::{
+    error::Error,
     io::{stdin, stdout, Read},
     path::PathBuf,
 };
@@ -129,6 +130,22 @@ fn print_character_from_file(messages: &str, file_path: &str, max_width: usize, 
     println!("{}", format_character(messages, &chara, max_width, think));
 }
 
+fn read_input(message: Vec<String>) -> Result<String, Box<dyn Error>> {
+    let mut messages = message.join(" ");
+
+    if messages.is_empty() {
+        let mut buffer = String::new();
+
+        if let Err(err) = stdin().read_to_string(&mut buffer) {
+            return Err(Box::new(err));
+        }
+
+        messages = buffer.trim_end().to_string();
+    }
+
+    Ok(messages)
+}
+
 fn main() {
     let cli = Cli::parse();
 
@@ -139,17 +156,13 @@ fn main() {
             width,
             charas,
         } => {
-            let mut messages = message.join(" ");
-
-            if messages.is_empty() {
-                let mut buffer = String::new();
-
-                stdin()
-                    .read_to_string(&mut buffer)
-                    .unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
-
-                messages = buffer.trim_end().to_string();
-            }
+            let messages = match read_input(message) {
+                Ok(s) => s,
+                Err(err) => {
+                    eprintln!("Failed to read input: {:#?}", err);
+                    std::process::exit(1);
+                }
+            };
 
             let max_width = width.unwrap_or(termwidth() - BORDER_WIDTH);
 
