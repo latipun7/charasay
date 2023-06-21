@@ -88,13 +88,17 @@ impl SpeechBubble {
 
     pub fn create(self, messages: &str, max_width: &usize) -> Result<String, Box<dyn Error>> {
         const SPACE: &str = " ";
-        let mut write_buffer = Vec::new();
 
         // for computing messages length
         let wrapped = fill(messages, *max_width).replace('\t', "    ");
         let lines: Vec<&str> = wrapped.lines().collect();
         let line_count = lines.len();
         let actual_width = Self::longest_line(&lines)?;
+
+        let total_size_buffer = (actual_width +5) * 2
+            + line_count * (actual_width + 6);
+
+        let mut write_buffer = Vec::with_capacity(total_size_buffer);
 
         // draw top box border
         write_buffer.push(self.corner_top_left);
