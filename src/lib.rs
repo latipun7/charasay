@@ -1,5 +1,4 @@
-use std::error::Error;
-use std::{collections::HashMap, fs::File, io::Read, path::PathBuf, str::from_utf8};
+use std::{collections::HashMap, error::Error, fs::File, io::Read, path::PathBuf, str::from_utf8};
 
 use rand::seq::SliceRandom;
 use regex::Regex;

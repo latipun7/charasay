@@ -1,5 +1,4 @@
-use std::error::Error;
-use std::str::from_utf8;
+use std::{error::Error, str::from_utf8};
 
 use strip_ansi_escapes::strip;
 use textwrap::fill;
@@ -95,8 +94,7 @@ impl SpeechBubble {
         let line_count = lines.len();
         let actual_width = Self::longest_line(&lines)?;
 
-        let total_size_buffer = (actual_width +5) * 2
-            + line_count * (actual_width + 6);
+        let total_size_buffer = (actual_width + 5) * 2 + line_count * (actual_width + 6);
 
         let mut write_buffer = Vec::with_capacity(total_size_buffer);
 
