@@ -1,3 +1,4 @@
+use std::error::Error;
 use std::str::from_utf8;
 
 use strip_ansi_escapes::strip;
@@ -70,23 +71,22 @@ impl SpeechBubble {
         }
     }
 
-    fn line_len(line: &str) -> usize {
-        let stripped = strip(line).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
-        let text =
-            from_utf8(stripped.as_slice()).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
+    fn line_len(line: &str) -> Result<usize, Box<dyn Error>> {
+        let stripped = strip(line)?;
+        let text = from_utf8(stripped.as_slice());
 
-        UnicodeWidthStr::width(text)
+        Ok(text.map(UnicodeWidthStr::width).unwrap_or(0))
     }
 
-    fn longest_line(lines: &[&str]) -> usize {
-        lines
+    fn longest_line(lines: &[&str]) -> Result<usize, Box<dyn Error>> {
+        let line_lengths = lines
             .iter()
             .map(|line| Self::line_len(line))
-            .max()
-            .unwrap_or(0)
+            .collect::<Result<Vec<_>, _>>()?;
+        Ok(line_lengths.into_iter().max().unwrap_or(0))
     }
 
-    pub fn create(self, messages: &str, max_width: &usize) -> String {
+    pub fn create(self, messages: &str, max_width: &usize) -> Result<String, Box<dyn Error>> {
         const SPACE: &str = " ";
         let mut write_buffer = Vec::new();
 
@@ -94,7 +94,7 @@ impl SpeechBubble {
         let wrapped = fill(messages, *max_width).replace('\t', "    ");
         let lines: Vec<&str> = wrapped.lines().collect();
         let line_count = lines.len();
-        let actual_width = Self::longest_line(&lines);
+        let actual_width = Self::longest_line(&lines)?;
 
         // draw top box border
         write_buffer.push(self.corner_top_left);
@@ -117,7 +117,7 @@ impl SpeechBubble {
             }
 
             // text line
-            let line_len = Self::line_len(line);
+            let line_len = Self::line_len(line)?;
             write_buffer.push(line);
             write_buffer.resize(write_buffer.len() + actual_width - line_len, SPACE);
 
@@ -140,6 +140,6 @@ impl SpeechBubble {
         }
         write_buffer.push(self.corner_bottom_right);
 
-        write_buffer.join("")
+        Ok(write_buffer.join(""))
     }
 }
