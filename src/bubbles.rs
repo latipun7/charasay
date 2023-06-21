@@ -10,6 +10,40 @@ pub enum BubbleType {
     Round,
 }
 
+const THINK_BUBBLE: SpeechBubble = SpeechBubble {
+    corner_top_left: "(",
+    top: "⁀",
+    corner_top_right: ")\n",
+    top_right: "  )\n",
+    right: "  )\n",
+    bottom_right: "  )\n",
+    corner_bottom_right: ")\n",
+    bottom: "‿",
+    corner_bottom_left: "(",
+    bottom_left: "(  ",
+    left: "(  ",
+    top_left: "(  ",
+    short_left: "(  ",
+    short_right: "  )\n",
+};
+
+const ROUND_BUBBLE: SpeechBubble = SpeechBubble {
+    corner_top_left: "╭",
+    top: "─",
+    corner_top_right: "╮\n",
+    top_right: "  │\n",
+    right: "  │\n",
+    bottom_right: "  │\n",
+    corner_bottom_right: "╯\n",
+    bottom: "─",
+    corner_bottom_left: "╰",
+    bottom_left: "│  ",
+    left: "│  ",
+    top_left: "│  ",
+    short_left: "│  ",
+    short_right: "  │\n",
+};
+
 #[derive(Debug)]
 pub struct SpeechBubble {
     corner_top_left: &'static str,
@@ -30,71 +64,9 @@ pub struct SpeechBubble {
 
 impl SpeechBubble {
     pub fn new(bubble_type: BubbleType) -> Self {
-        let corner_top_left;
-        let top;
-        let corner_top_right;
-        let top_right;
-        let right;
-        let bottom_right;
-        let corner_bottom_right;
-        let bottom;
-        let corner_bottom_left;
-        let bottom_left;
-        let left;
-        let top_left;
-        let short_left;
-        let short_right;
-
         match bubble_type {
-            BubbleType::Think => {
-                corner_top_left = "(";
-                top = "⁀";
-                corner_top_right = ")\n";
-                top_right = "  )\n";
-                right = "  )\n";
-                bottom_right = "  )\n";
-                corner_bottom_right = ")\n";
-                bottom = "‿";
-                corner_bottom_left = "(";
-                bottom_left = "(  ";
-                left = "(  ";
-                top_left = "(  ";
-                short_left = "(  ";
-                short_right = "  )\n";
-            }
-            BubbleType::Round => {
-                corner_top_left = "╭";
-                top = "─";
-                corner_top_right = "╮\n";
-                top_right = "  │\n";
-                right = "  │\n";
-                bottom_right = "  │\n";
-                corner_bottom_right = "╯\n";
-                bottom = "─";
-                corner_bottom_left = "╰";
-                bottom_left = "│  ";
-                left = "│  ";
-                top_left = "│  ";
-                short_left = "│  ";
-                short_right = "  │\n";
-            }
-        };
-
-        Self {
-            corner_top_left,
-            top,
-            corner_top_right,
-            top_right,
-            right,
-            bottom_right,
-            corner_bottom_right,
-            bottom,
-            corner_bottom_left,
-            bottom_left,
-            left,
-            top_left,
-            short_left,
-            short_right,
+            BubbleType::Think => THINK_BUBBLE,
+            BubbleType::Round => ROUND_BUBBLE,
         }
     }
 
