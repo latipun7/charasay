@@ -1,4 +1,4 @@
-use std::{collections::HashMap, fs::File, io::Read, path::PathBuf, str::from_utf8};
+use std::{collections::HashMap, error::Error, fs::File, io::Read, path::PathBuf, str::from_utf8};
 
 use rand::seq::SliceRandom;
 use regex::Regex;
@@ -147,7 +147,12 @@ fn parse_character(chara: &Chara, voice_line: &str) -> String {
 }
 
 /// Format arguments to form complete charasay
-pub fn format_character(messages: &str, chara: &Chara, max_width: usize, think: bool) -> String {
+pub fn format_character(
+    messages: &str,
+    chara: &Chara,
+    max_width: usize,
+    think: bool,
+) -> Result<String, Box<dyn Error>> {
     let voice_line = if think { "o " } else { "╲ " };
     let bubble_type = if think {
         BubbleType::Think
@@ -157,10 +162,10 @@ pub fn format_character(messages: &str, chara: &Chara, max_width: usize, think: 
 
     let speech_bubble = SpeechBubble::new(bubble_type);
 
-    let speech = speech_bubble.create(messages, &max_width);
+    let speech = speech_bubble.create(messages, &max_width)?;
     let character = parse_character(chara, voice_line);
 
-    format!("{}{}", speech, character)
+    Ok(format!("{}{}", speech, character))
 }
 
 /// Print only the character

@@ -84,22 +84,32 @@ fn print_completions<G: Generator>(gen: G, cmd: &mut Command) {
     generate(gen, cmd, cmd.get_name().to_string(), &mut stdout());
 }
 
-fn print_characters(charas: Charas, messages: String, max_width: usize, think: bool) {
+fn print_characters(
+    charas: Charas,
+    messages: String,
+    max_width: usize,
+    think: bool,
+) -> Result<(), Box<dyn Error>> {
     if charas.all {
-        print_all_characters(&messages, max_width, think);
+        print_all_characters(&messages, max_width, think)?;
     } else if charas.random {
-        print_random_character(&messages, max_width, think);
+        print_random_character(&messages, max_width, think)?;
     } else if let Some(s) = &charas.chara {
-        print_specified_character(&messages, s, max_width, think);
+        print_specified_character(&messages, s, max_width, think)?;
     } else if let Some(path) = &charas.file {
-        print_character_from_file(&messages, path.to_str().unwrap(), max_width, think);
+        print_character_from_file(&messages, path.to_str().unwrap(), max_width, think)?;
     } else {
         let chara = Chara::Builtin("cow".to_string());
-        println!("{}", format_character(&messages, &chara, max_width, think));
+        println!("{}", format_character(&messages, &chara, max_width, think)?);
     }
+    Ok(())
 }
 
-fn print_all_characters(messages: &str, max_width: usize, think: bool) {
+fn print_all_characters(
+    messages: &str,
+    max_width: usize,
+    think: bool,
+) -> Result<(), Box<dyn Error>> {
     let charas = BUILTIN_CHARA;
     for chara in charas {
         println!("\n\n{}", chara);
@@ -110,24 +120,42 @@ fn print_all_characters(messages: &str, max_width: usize, think: bool) {
                 &Chara::Builtin(chara.to_string()),
                 max_width,
                 think
-            )
+            )?
         );
     }
+    Ok(())
 }
 
-fn print_random_character(messages: &str, max_width: usize, think: bool) {
+fn print_random_character(
+    messages: &str,
+    max_width: usize,
+    think: bool,
+) -> Result<(), Box<dyn Error>> {
     let chara = Chara::Random;
-    println!("{}", format_character(messages, &chara, max_width, think));
+    println!("{}", format_character(messages, &chara, max_width, think)?);
+    Ok(())
 }
 
-fn print_specified_character(messages: &str, chara_name: &str, max_width: usize, think: bool) {
+fn print_specified_character(
+    messages: &str,
+    chara_name: &str,
+    max_width: usize,
+    think: bool,
+) -> Result<(), Box<dyn Error>> {
     let chara = Chara::Builtin(chara_name.to_string());
-    println!("{}", format_character(messages, &chara, max_width, think));
+    println!("{}", format_character(messages, &chara, max_width, think)?);
+    Ok(())
 }
 
-fn print_character_from_file(messages: &str, file_path: &str, max_width: usize, think: bool) {
+fn print_character_from_file(
+    messages: &str,
+    file_path: &str,
+    max_width: usize,
+    think: bool,
+) -> Result<(), Box<dyn Error>> {
     let chara = Chara::File(file_path.into());
-    println!("{}", format_character(messages, &chara, max_width, think));
+    println!("{}", format_character(messages, &chara, max_width, think)?);
+    Ok(())
 }
 
 fn read_input(message: Vec<String>) -> Result<String, Box<dyn Error>> {
@@ -146,7 +174,7 @@ fn read_input(message: Vec<String>) -> Result<String, Box<dyn Error>> {
     Ok(messages)
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let cli = Cli::parse();
 
     match cli.command {
@@ -166,7 +194,7 @@ fn main() {
 
             let max_width = width.unwrap_or(termwidth() - BORDER_WIDTH);
 
-            print_characters(charas, messages, max_width, think);
+            print_characters(charas, messages, max_width, think)?;
         }
 
         Commands::Completions { shell } => {
@@ -198,4 +226,5 @@ fn main() {
 
         Commands::Convert { image: _ } => todo!(),
     }
+    Ok(())
 }

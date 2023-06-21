@@ -1,4 +1,4 @@
-use std::str::from_utf8;
+use std::{error::Error, str::from_utf8};
 
 use strip_ansi_escapes::strip;
 use textwrap::fill;
@@ -9,6 +9,40 @@ pub enum BubbleType {
     Think,
     Round,
 }
+
+const THINK_BUBBLE: SpeechBubble = SpeechBubble {
+    corner_top_left: "(",
+    top: "⁀",
+    corner_top_right: ")\n",
+    top_right: "  )\n",
+    right: "  )\n",
+    bottom_right: "  )\n",
+    corner_bottom_right: ")\n",
+    bottom: "‿",
+    corner_bottom_left: "(",
+    bottom_left: "(  ",
+    left: "(  ",
+    top_left: "(  ",
+    short_left: "(  ",
+    short_right: "  )\n",
+};
+
+const ROUND_BUBBLE: SpeechBubble = SpeechBubble {
+    corner_top_left: "╭",
+    top: "─",
+    corner_top_right: "╮\n",
+    top_right: "  │\n",
+    right: "  │\n",
+    bottom_right: "  │\n",
+    corner_bottom_right: "╯\n",
+    bottom: "─",
+    corner_bottom_left: "╰",
+    bottom_left: "│  ",
+    left: "│  ",
+    top_left: "│  ",
+    short_left: "│  ",
+    short_right: "  │\n",
+};
 
 #[derive(Debug)]
 pub struct SpeechBubble {
@@ -30,99 +64,39 @@ pub struct SpeechBubble {
 
 impl SpeechBubble {
     pub fn new(bubble_type: BubbleType) -> Self {
-        let corner_top_left;
-        let top;
-        let corner_top_right;
-        let top_right;
-        let right;
-        let bottom_right;
-        let corner_bottom_right;
-        let bottom;
-        let corner_bottom_left;
-        let bottom_left;
-        let left;
-        let top_left;
-        let short_left;
-        let short_right;
-
         match bubble_type {
-            BubbleType::Think => {
-                corner_top_left = "(";
-                top = "⁀";
-                corner_top_right = ")\n";
-                top_right = "  )\n";
-                right = "  )\n";
-                bottom_right = "  )\n";
-                corner_bottom_right = ")\n";
-                bottom = "‿";
-                corner_bottom_left = "(";
-                bottom_left = "(  ";
-                left = "(  ";
-                top_left = "(  ";
-                short_left = "(  ";
-                short_right = "  )\n";
-            }
-            BubbleType::Round => {
-                corner_top_left = "╭";
-                top = "─";
-                corner_top_right = "╮\n";
-                top_right = "  │\n";
-                right = "  │\n";
-                bottom_right = "  │\n";
-                corner_bottom_right = "╯\n";
-                bottom = "─";
-                corner_bottom_left = "╰";
-                bottom_left = "│  ";
-                left = "│  ";
-                top_left = "│  ";
-                short_left = "│  ";
-                short_right = "  │\n";
-            }
-        };
-
-        Self {
-            corner_top_left,
-            top,
-            corner_top_right,
-            top_right,
-            right,
-            bottom_right,
-            corner_bottom_right,
-            bottom,
-            corner_bottom_left,
-            bottom_left,
-            left,
-            top_left,
-            short_left,
-            short_right,
+            BubbleType::Think => THINK_BUBBLE,
+            BubbleType::Round => ROUND_BUBBLE,
         }
     }
 
-    fn line_len(line: &str) -> usize {
-        let stripped = strip(line).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
-        let text =
-            from_utf8(stripped.as_slice()).unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err));
+    fn line_len(line: &str) -> Result<usize, Box<dyn Error>> {
+        let stripped = strip(line)?;
+        let text = from_utf8(stripped.as_slice());
 
-        UnicodeWidthStr::width(text)
+        Ok(text.map(UnicodeWidthStr::width).unwrap_or(0))
     }
 
-    fn longest_line(lines: &[&str]) -> usize {
-        lines
+    fn longest_line(lines: &[&str]) -> Result<usize, Box<dyn Error>> {
+        let line_lengths = lines
             .iter()
             .map(|line| Self::line_len(line))
-            .max()
-            .unwrap_or(0)
+            .collect::<Result<Vec<_>, _>>()?;
+        Ok(line_lengths.into_iter().max().unwrap_or(0))
     }
 
-    pub fn create(self, messages: &str, max_width: &usize) -> String {
+    pub fn create(self, messages: &str, max_width: &usize) -> Result<String, Box<dyn Error>> {
         const SPACE: &str = " ";
-        let mut write_buffer = Vec::new();
 
         // for computing messages length
         let wrapped = fill(messages, *max_width).replace('\t', "    ");
         let lines: Vec<&str> = wrapped.lines().collect();
         let line_count = lines.len();
-        let actual_width = Self::longest_line(&lines);
+        let actual_width = Self::longest_line(&lines)?;
+
+        let total_size_buffer = (actual_width + 5) * 2 + line_count * (actual_width + 6);
+
+        let mut write_buffer = Vec::with_capacity(total_size_buffer);
 
         // draw top box border
         write_buffer.push(self.corner_top_left);
@@ -145,7 +119,7 @@ impl SpeechBubble {
             }
 
             // text line
-            let line_len = Self::line_len(line);
+            let line_len = Self::line_len(line)?;
             write_buffer.push(line);
             write_buffer.resize(write_buffer.len() + actual_width - line_len, SPACE);
 
@@ -168,6 +142,6 @@ impl SpeechBubble {
         }
         write_buffer.push(self.corner_bottom_right);
 
-        write_buffer.join("")
+        Ok(write_buffer.join(""))
     }
 }
