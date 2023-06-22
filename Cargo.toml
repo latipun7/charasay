@@ -16,12 +16,6 @@ categories = [
   "rendering",
 ]
 
-[profile.release]
-strip = "symbols"
-lto = true
-codegen-units = 1
-opt-level = "s"
-
 [[bin]]
 name = "chara"
 
