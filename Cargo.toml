@@ -20,7 +20,7 @@ categories = [
 name = "chara"
 
 [dependencies]
-clap = { version = "4.3.4", features = ["derive"] }
+clap = { version = "4.3.8", features = ["derive"] }
 clap_complete = "4.3.1"
 rust-embed = { version = "6.7.0", features = ["debug-embed"] }
 textwrap = { version = "0.16.0", features = ["terminal_size"] }
