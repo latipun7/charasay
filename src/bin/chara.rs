@@ -4,7 +4,7 @@ use std::{
     path::PathBuf,
 };
 
-use charasay::{format_character, print_character, Chara, BUILTIN_CHARA};
+use charasay::{bubbles::BubbleType, format_character, print_character, Chara, BUILTIN_CHARA};
 use clap::{Args, Command, CommandFactory, Parser, Subcommand};
 use clap_complete::{generate, Generator, Shell};
 use textwrap::termwidth;
@@ -25,9 +25,9 @@ enum Commands {
         /// Messages that chara want to say/think. If empty, read from standard input.
         message: Vec<String>,
 
-        /// Make chara only thinking about it, not saying it.
-        #[arg(short, long)]
-        think: bool,
+        /// Choose bubble type to use. Default to round.
+        #[arg(short = 't', long, value_enum)]
+        bubble_type: Option<BubbleType>,
 
         /// Max width of speech bubble. Default to terminal width.
         #[arg(short, long)]
@@ -84,31 +84,10 @@ fn print_completions<G: Generator>(gen: G, cmd: &mut Command) {
     generate(gen, cmd, cmd.get_name().to_string(), &mut stdout());
 }
 
-fn print_characters(
-    charas: Charas,
-    messages: String,
-    max_width: usize,
-    think: bool,
-) -> Result<(), Box<dyn Error>> {
-    if charas.all {
-        print_all_characters(&messages, max_width, think)?;
-    } else if charas.random {
-        print_random_character(&messages, max_width, think)?;
-    } else if let Some(s) = &charas.chara {
-        print_specified_character(&messages, s, max_width, think)?;
-    } else if let Some(path) = &charas.file {
-        print_character_from_file(&messages, path.to_str().unwrap(), max_width, think)?;
-    } else {
-        let chara = Chara::Builtin("cow".to_string());
-        println!("{}", format_character(&messages, &chara, max_width, think)?);
-    }
-    Ok(())
-}
-
 fn print_all_characters(
     messages: &str,
     max_width: usize,
-    think: bool,
+    bubble_type: BubbleType,
 ) -> Result<(), Box<dyn Error>> {
     let charas = BUILTIN_CHARA;
     for chara in charas {
@@ -119,7 +98,7 @@ fn print_all_characters(
                 messages,
                 &Chara::Builtin(chara.to_string()),
                 max_width,
-                think
+                bubble_type
             )?
         );
     }
@@ -129,10 +108,13 @@ fn print_all_characters(
 fn print_random_character(
     messages: &str,
     max_width: usize,
-    think: bool,
+    bubble_type: BubbleType,
 ) -> Result<(), Box<dyn Error>> {
     let chara = Chara::Random;
-    println!("{}", format_character(messages, &chara, max_width, think)?);
+    println!(
+        "{}",
+        format_character(messages, &chara, max_width, bubble_type)?
+    );
     Ok(())
 }
 
@@ -140,10 +122,13 @@ fn print_specified_character(
     messages: &str,
     chara_name: &str,
     max_width: usize,
-    think: bool,
+    bubble_type: BubbleType,
 ) -> Result<(), Box<dyn Error>> {
     let chara = Chara::Builtin(chara_name.to_string());
-    println!("{}", format_character(messages, &chara, max_width, think)?);
+    println!(
+        "{}",
+        format_character(messages, &chara, max_width, bubble_type)?
+    );
     Ok(())
 }
 
@@ -151,10 +136,37 @@ fn print_character_from_file(
     messages: &str,
     file_path: &str,
     max_width: usize,
-    think: bool,
+    bubble_type: BubbleType,
 ) -> Result<(), Box<dyn Error>> {
     let chara = Chara::File(file_path.into());
-    println!("{}", format_character(messages, &chara, max_width, think)?);
+    println!(
+        "{}",
+        format_character(messages, &chara, max_width, bubble_type)?
+    );
+    Ok(())
+}
+
+fn print_characters(
+    charas: Charas,
+    messages: String,
+    max_width: usize,
+    bubble_type: BubbleType,
+) -> Result<(), Box<dyn Error>> {
+    if charas.all {
+        print_all_characters(&messages, max_width, bubble_type)?;
+    } else if charas.random {
+        print_random_character(&messages, max_width, bubble_type)?;
+    } else if let Some(s) = &charas.chara {
+        print_specified_character(&messages, s, max_width, bubble_type)?;
+    } else if let Some(path) = &charas.file {
+        print_character_from_file(&messages, path.to_str().unwrap(), max_width, bubble_type)?;
+    } else {
+        let chara = Chara::Builtin("cow".to_string());
+        println!(
+            "{}",
+            format_character(&messages, &chara, max_width, bubble_type)?
+        );
+    }
     Ok(())
 }
 
@@ -180,7 +192,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     match cli.command {
         Commands::Say {
             message,
-            think,
+            bubble_type,
             width,
             charas,
         } => {
@@ -193,8 +205,12 @@ fn main() -> Result<(), Box<dyn Error>> {
             };
 
             let max_width = width.unwrap_or(termwidth() - BORDER_WIDTH);
+            let bubble_type = match bubble_type {
+                Some(bt) => bt,
+                None => BubbleType::Round,
+            };
 
-            print_characters(charas, messages, max_width, think)?;
+            print_characters(charas, messages, max_width, bubble_type)?;
         }
 
         Commands::Completions { shell } => {
