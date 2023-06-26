@@ -36,6 +36,9 @@ jobs:
       - name: 📎 Check Linting
         run: cargo clippy --locked --all-targets --all-features -- -D warnings
 
+      - name: 🧪 Run Tests
+        run: cargo test --locked --all-targets --all-features
+
   build-artifacts:
     name: ⚙️ Build (${{ matrix.artifact-name }})
     needs: [code-quality]
@@ -87,9 +90,6 @@ jobs:
 
       - name: 🛠️ Build Binary
         run: cargo build --locked --release --target ${{ matrix.cargo-target }}
-
-      - name: 🧪 Run Tests
-        run: cargo test --locked --all-targets --all-features
 
       - name: 📁 Setup Archive + Extension
         shell: bash
