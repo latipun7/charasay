@@ -1,13 +1,17 @@
 use std::{error::Error, str::from_utf8};
 
+use clap::ValueEnum;
 use strip_ansi_escapes::strip;
 use textwrap::fill;
 use unicode_width::UnicodeWidthStr;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, PartialOrd, Ord, ValueEnum)]
 pub enum BubbleType {
     Think,
     Round,
+    Cowsay,
+    Ascii,
+    Unicode,
 }
 
 const THINK_BUBBLE: SpeechBubble = SpeechBubble {
@@ -44,6 +48,57 @@ const ROUND_BUBBLE: SpeechBubble = SpeechBubble {
     short_right: "  │\n",
 };
 
+const COWSAY_BUBBLE: SpeechBubble = SpeechBubble {
+    corner_top_left: " ",
+    top: "_",
+    corner_top_right: " \n",
+    top_right: "  \\\n",
+    right: "  |\n",
+    bottom_right: "  /\n",
+    corner_bottom_right: " \n",
+    bottom: "-",
+    corner_bottom_left: " ",
+    bottom_left: "\\  ",
+    left: "|  ",
+    top_left: "/  ",
+    short_left: "<  ",
+    short_right: "  >\n",
+};
+
+const ASCII_BUBBLE: SpeechBubble = SpeechBubble {
+    corner_top_left: " ",
+    top: "_",
+    corner_top_right: " \n",
+    top_right: "  \\\n",
+    right: "  |\n",
+    bottom_right: "  |\n",
+    corner_bottom_right: "/\n",
+    bottom: "_",
+    corner_bottom_left: "\\",
+    bottom_left: "|  ",
+    left: "|  ",
+    top_left: "/  ",
+    short_left: "/  ",
+    short_right: "  \\\n",
+};
+
+const UNICODE_BUBBLE: SpeechBubble = SpeechBubble {
+    corner_top_left: "┌",
+    top: "─",
+    corner_top_right: "┐\n",
+    top_right: "  │\n",
+    right: "  │\n",
+    bottom_right: "  │\n",
+    corner_bottom_right: "┘\n",
+    bottom: "─",
+    corner_bottom_left: "└",
+    bottom_left: "│  ",
+    left: "│  ",
+    top_left: "│  ",
+    short_left: "│  ",
+    short_right: "  │\n",
+};
+
 #[derive(Debug)]
 pub struct SpeechBubble {
     corner_top_left: &'static str,
@@ -67,6 +122,9 @@ impl SpeechBubble {
         match bubble_type {
             BubbleType::Think => THINK_BUBBLE,
             BubbleType::Round => ROUND_BUBBLE,
+            BubbleType::Cowsay => COWSAY_BUBBLE,
+            BubbleType::Ascii => ASCII_BUBBLE,
+            BubbleType::Unicode => UNICODE_BUBBLE,
         }
     }
 

@@ -6,7 +6,7 @@ use rust_embed::RustEmbed;
 
 use crate::bubbles::{BubbleType, SpeechBubble};
 
-mod bubbles;
+pub mod bubbles;
 
 #[derive(RustEmbed, Debug)]
 #[folder = "src/charas"]
@@ -151,17 +151,33 @@ pub fn format_character(
     messages: &str,
     chara: &Chara,
     max_width: usize,
-    think: bool,
+    bubble_type: BubbleType,
 ) -> Result<String, Box<dyn Error>> {
-    let voice_line = if think { "o " } else { "╲ " };
-    let bubble_type = if think {
-        BubbleType::Think
-    } else {
-        BubbleType::Round
+    let voice_line: &str;
+    let bubble_type = match bubble_type {
+        BubbleType::Think => {
+            voice_line = "o ";
+            BubbleType::Think
+        }
+        BubbleType::Round => {
+            voice_line = "╲ ";
+            BubbleType::Round
+        }
+        BubbleType::Cowsay => {
+            voice_line = "\\ ";
+            BubbleType::Cowsay
+        }
+        BubbleType::Ascii => {
+            voice_line = "\\ ";
+            BubbleType::Ascii
+        }
+        BubbleType::Unicode => {
+            voice_line = "╲ ";
+            BubbleType::Unicode
+        }
     };
 
     let speech_bubble = SpeechBubble::new(bubble_type);
-
     let speech = speech_bubble.create(messages, &max_width)?;
     let character = parse_character(chara, voice_line);
 
