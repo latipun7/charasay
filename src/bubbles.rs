@@ -144,7 +144,6 @@ impl SpeechBubble {
     }
 
     pub fn create(self, messages: &str, max_width: &usize) -> Result<String, Box<dyn Error>> {
-
         const SPACE: &str = " ";
         let wrapped = fill(messages, *max_width).replace('\t', "    ");
         let lines: Vec<&str> = wrapped.lines().collect();
@@ -162,14 +161,13 @@ impl SpeechBubble {
         write_buffer.push(self.corner_top_right);
 
         for (i, line) in lines.into_iter().enumerate() {
-
             let left_border = match (line_count, i) {
                 (1, _) => self.short_left,
                 (_, 0) => self.top_left,
                 (_, i) if i == line_count - 1 => self.bottom_left,
                 _ => self.left,
             };
-            
+
             write_buffer.push(left_border);
 
             let line_len = Self::line_len(line)?;
@@ -184,7 +182,6 @@ impl SpeechBubble {
                 _ => self.right,
             };
             write_buffer.push(right_border);
-
         }
 
         // draw bottom box border
