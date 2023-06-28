@@ -144,9 +144,8 @@ impl SpeechBubble {
     }
 
     pub fn create(self, messages: &str, max_width: &usize) -> Result<String, Box<dyn Error>> {
-        const SPACE: &str = " ";
 
-        // for computing messages length
+        const SPACE: &str = " ";
         let wrapped = fill(messages, *max_width).replace('\t', "    ");
         let lines: Vec<&str> = wrapped.lines().collect();
         let line_count = lines.len();
@@ -156,41 +155,36 @@ impl SpeechBubble {
 
         let mut write_buffer = Vec::with_capacity(total_size_buffer);
 
-        // draw top box border
         write_buffer.push(self.corner_top_left);
         for _ in 0..(actual_width + 4) {
             write_buffer.push(self.top);
         }
         write_buffer.push(self.corner_top_right);
 
-        // draw inner message each line
         for (i, line) in lines.into_iter().enumerate() {
-            // left border
-            if line_count == 1 {
-                write_buffer.push(self.short_left);
-            } else if i == 0 {
-                write_buffer.push(self.top_left);
-            } else if i == line_count - 1 {
-                write_buffer.push(self.bottom_left);
-            } else {
-                write_buffer.push(self.left);
-            }
 
-            // text line
+            let left_border = match (line_count, i) {
+                (1, _) => self.short_left,
+                (_, 0) => self.top_left,
+                (_, i) if i == line_count - 1 => self.bottom_left,
+                _ => self.left,
+            };
+            
+            write_buffer.push(left_border);
+
             let line_len = Self::line_len(line)?;
             write_buffer.push(line);
             write_buffer.resize(write_buffer.len() + actual_width - line_len, SPACE);
 
             // right border
-            if line_count == 1 {
-                write_buffer.push(self.short_right);
-            } else if i == 0 {
-                write_buffer.push(self.top_right);
-            } else if i == line_count - 1 {
-                write_buffer.push(self.bottom_right);
-            } else {
-                write_buffer.push(self.right);
-            }
+            let right_border = match (line_count, i) {
+                (1, _) => self.short_right,
+                (_, 0) => self.top_right,
+                (_, i) if i == line_count - 1 => self.bottom_right,
+                _ => self.right,
+            };
+            write_buffer.push(right_border);
+
         }
 
         // draw bottom box border
