@@ -154,12 +154,14 @@ impl SpeechBubble {
 
         let mut write_buffer = Vec::with_capacity(total_size_buffer);
 
+        // draw top box border
         write_buffer.push(self.corner_top_left);
         for _ in 0..(actual_width + 4) {
             write_buffer.push(self.top);
         }
         write_buffer.push(self.corner_top_right);
 
+        // draw inner borders & messages
         for (i, line) in lines.into_iter().enumerate() {
             let left_border = match (line_count, i) {
                 (1, _) => self.short_left,
@@ -167,14 +169,12 @@ impl SpeechBubble {
                 (_, i) if i == line_count - 1 => self.bottom_left,
                 _ => self.left,
             };
-
             write_buffer.push(left_border);
 
             let line_len = Self::line_len(line)?;
             write_buffer.push(line);
             write_buffer.resize(write_buffer.len() + actual_width - line_len, SPACE);
 
-            // right border
             let right_border = match (line_count, i) {
                 (1, _) => self.short_right,
                 (_, 0) => self.top_right,
