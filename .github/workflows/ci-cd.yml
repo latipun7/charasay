@@ -48,31 +48,35 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            artifact-name: chara-linux-x86_64
+            artifact-name: chara-x86_64-unknown-linux-gnu
             cargo-target: x86_64-unknown-linux-gnu
           - os: ubuntu-latest
-            artifact-name: chara-linux-aarch64
+            artifact-name: chara-aarch64-unknown-linux-gnu
             cargo-target: aarch64-unknown-linux-gnu
             linker: gcc-aarch64-linux-gnu
+          - os: ubuntu-latest
+            artifact-name: chara-aarch64-linux-android
+            cargo-target: aarch64-linux-android
           - os: macos-latest
-            artifact-name: chara-macos-x86_64
+            artifact-name: chara-x86_64-apple-darwin
             cargo-target: x86_64-apple-darwin
-          - os: macos-latest
-            artifact-name: chara-macos-aarch64
-            cargo-target: aarch64-apple-darwin
           - os: windows-latest
-            artifact-name: chara-windows-x86_64
+            artifact-name: chara-x86_64-pc-windows-gnu
             cargo-target: x86_64-pc-windows-gnu
 
     steps:
       - name: 🛎️ Checkout
         uses: actions/checkout@v3.5.3
 
-      - name: 🔗 Install Linker packages
+      - name: 🔗 Install Linker Packages
         if: matrix.linker != ''
         run: |
           sudo apt-get -y update
           sudo apt-get -y install ${{ matrix.linker }}
+
+      - name: 🛣️ Set Linker Path
+        if: matrix.cargo-target == 'aarch64-linux-android'
+        run: echo "$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin" >> $GITHUB_PATH
 
       - name: 🎯 Add Rustup Target
         run: rustup target add ${{ matrix.cargo-target }}
