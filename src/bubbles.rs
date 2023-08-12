@@ -129,7 +129,7 @@ impl SpeechBubble {
     }
 
     fn line_len(line: &str) -> Result<usize, Box<dyn Error>> {
-        let stripped = strip(line)?;
+        let stripped = strip(line);
         let text = from_utf8(stripped.as_slice());
 
         Ok(text.map(UnicodeWidthStr::width).unwrap_or(0))
