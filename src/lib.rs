@@ -68,7 +68,7 @@ fn load_raw_chara_string(chara: &Chara) -> String {
         }
 
         Chara::Raw(s) => {
-            raw_chara = s;
+            raw_chara = s.to_string();
         }
 
         Chara::All => {
