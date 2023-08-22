@@ -18,6 +18,7 @@ pub enum Chara {
     All,
     Builtin(String),
     File(PathBuf),
+    Raw(String),
     Random,
 }
 
@@ -64,6 +65,10 @@ fn load_raw_chara_string(chara: &Chara) -> String {
             raw_chara = from_utf8(&asset.data)
                 .unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err))
                 .to_string();
+        }
+
+        Chara::Raw(s) => {
+            raw_chara = s.to_string();
         }
 
         Chara::All => {
