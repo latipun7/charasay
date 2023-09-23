@@ -25,7 +25,7 @@ jobs:
           components: clippy, rustfmt
 
       - name: ♻️ Manage Cache
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v3.3.2
         with:
           path: |
             ~/.cargo/
@@ -89,7 +89,7 @@ jobs:
         run: echo "$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin" >> $GITHUB_PATH
 
       - name: ♻️ Manage Build Cache
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v3.3.2
         with:
           path: |
             ~/.cargo/
