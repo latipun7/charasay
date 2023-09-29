@@ -24,7 +24,7 @@ clap = { version = "4.3.23", features = ["derive"] }
 clap_complete = "4.3.2"
 rust-embed = { version = "8.0.0", features = ["debug-embed"] }
 textwrap = { version = "0.16.0", features = ["terminal_size"] }
-unicode-width = "0.1.10"
+unicode-width = "0.1.11"
 regex = "1.9.5"
 rand = "0.8.5"
 strip-ansi-escapes = "0.2.0"
