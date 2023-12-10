@@ -3,6 +3,7 @@ use std::{
     io::{stdin, stdout, Read},
     path::PathBuf,
 };
+use charasay::errors::ReadInputError;
 
 use charasay::{bubbles::BubbleType, format_character, print_character, Chara, BUILTIN_CHARA};
 use clap::{Args, Command, CommandFactory, Parser, Subcommand};
@@ -181,14 +182,14 @@ fn print_characters(
     Ok(())
 }
 
-fn read_input(message: Vec<String>) -> Result<String, Box<dyn Error>> {
+fn read_input(message: Vec<String>) -> Result<String, ReadInputError> {
     let mut messages = message.join(" ");
 
     if messages.is_empty() {
         let mut buffer = String::new();
 
         if let Err(err) = stdin().read_to_string(&mut buffer) {
-            return Err(Box::new(err));
+            return Err(ReadInputError::IoError(err));
         }
 
         messages = buffer.trim_end().to_string();

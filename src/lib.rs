@@ -7,6 +7,7 @@ use rust_embed::RustEmbed;
 use crate::bubbles::{BubbleType, SpeechBubble};
 
 pub mod bubbles;
+pub mod errors;
 
 #[derive(RustEmbed, Debug)]
 #[folder = "src/charas"]

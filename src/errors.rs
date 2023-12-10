@@ -1,5 +1,7 @@
+use std::error::Error;
+
 #[derive(Debug)]
-enum ReadInputError {
+pub enum ReadInputError {
     // Represents an IO error
     IoError(std::io::Error),
     // Represents a UTF-8 decoding error
@@ -11,6 +13,8 @@ impl std::fmt::Display for ReadInputError {
         match self {
             // Format the error message as "IO error: <error>"
             ReadInputError::IoError(err) => write!(f, "IO error: {}", err),
+            // Format the error message as "UTF-8 error: <error>"
+            ReadInputError::Utf8Error(err) => write!(f, "UTF-8 error: {}", err),
         }
     }
 }
