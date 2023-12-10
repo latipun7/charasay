@@ -154,18 +154,23 @@ fn print_characters(
 ) -> Result<(), Box<dyn Error>> {
     match charas {
         Charas { all: true, .. } => {
+            // Print all built-in characters
             print_all_characters(&messages, max_width, bubble_type)?;
         }
         Charas { random: true, .. } => {
+            // Print a random character
             print_random_character(&messages, max_width, bubble_type)?;
         }
         Charas { chara: Some(s), .. } => {
+            // Print the specified character
             print_specified_character(&messages, &s, max_width, bubble_type)?;
         }
         Charas { file: Some(path), .. } => {
+            // Print the character from a file
             print_character_from_file(&messages, path.to_str().unwrap(), max_width, bubble_type)?;
         }
         _ => {
+            // Print the default character (cow)
             let chara = Chara::Builtin("cow".to_string());
             println!(
                 "{}",
