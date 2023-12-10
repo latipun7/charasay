@@ -152,20 +152,26 @@ fn print_characters(
     max_width: usize,
     bubble_type: BubbleType,
 ) -> Result<(), Box<dyn Error>> {
-    if charas.all {
-        print_all_characters(&messages, max_width, bubble_type)?;
-    } else if charas.random {
-        print_random_character(&messages, max_width, bubble_type)?;
-    } else if let Some(s) = &charas.chara {
-        print_specified_character(&messages, s, max_width, bubble_type)?;
-    } else if let Some(path) = &charas.file {
-        print_character_from_file(&messages, path.to_str().unwrap(), max_width, bubble_type)?;
-    } else {
-        let chara = Chara::Builtin("cow".to_string());
-        println!(
-            "{}",
-            format_character(&messages, &chara, max_width, bubble_type)?
-        );
+    match charas {
+        Charas { all: true, .. } => {
+            print_all_characters(&messages, max_width, bubble_type)?;
+        }
+        Charas { random: true, .. } => {
+            print_random_character(&messages, max_width, bubble_type)?;
+        }
+        Charas { chara: Some(s), .. } => {
+            print_specified_character(&messages, &s, max_width, bubble_type)?;
+        }
+        Charas { file: Some(path), .. } => {
+            print_character_from_file(&messages, path.to_str().unwrap(), max_width, bubble_type)?;
+        }
+        _ => {
+            let chara = Chara::Builtin("cow".to_string());
+            println!(
+                "{}",
+                format_character(&messages, &chara, max_width, bubble_type)?
+            );
+        }
     }
     Ok(())
 }
