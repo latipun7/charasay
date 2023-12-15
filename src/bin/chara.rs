@@ -1,9 +1,9 @@
+use charasay::errors::CustomError;
 use std::{
     error::Error,
     io::{stdin, stdout, Read},
     path::PathBuf,
 };
-use charasay::errors::CustomError;
 
 use charasay::{bubbles::BubbleType, format_character, print_character, Chara, BUILTIN_CHARA};
 use clap::{Args, Command, CommandFactory, Parser, Subcommand};
@@ -166,7 +166,9 @@ fn print_characters(
             // Print the specified character
             print_specified_character(&messages, &s, max_width, bubble_type)?;
         }
-        Charas { file: Some(path), .. } => {
+        Charas {
+            file: Some(path), ..
+        } => {
             // Print the character from a file
             print_character_from_file(&messages, path.to_str().unwrap(), max_width, bubble_type)?;
         }
