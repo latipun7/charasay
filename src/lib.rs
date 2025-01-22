@@ -24,8 +24,9 @@ pub enum Chara {
 }
 
 /// All built-in characters name.
-pub const BUILTIN_CHARA: [&str; 23] = [
+pub const BUILTIN_CHARA: [&str; 24] = [
     "aya",
+    "chocobo",
     "cirno",
     "clefairy",
     "cow",

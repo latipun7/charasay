@@ -1,0 +1,33 @@
+# Chocobo - true color
+# by https://www.youtube.com/@HelloPixelArt
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts ";
+$a = "\e[48;2;0;0;0m  ";
+$b = "\e[48;2;232;217;0m  ";
+$c = "\e[48;2;186;90;0m  ";
+$d = "\e[48;2;255;155;61m  ";
+$e = "\e[48;2;0;183;239m  ";
+$f = "\e[48;2;255;255;255m  ";
+$g = "\e[48;2;180;180;180m  ";
+
+$the_chara = <<EOC
+    $t
+     $t     $a                $x
+      $t$a  $b            $c  $a$x
+      $a$d  $a  $b    $c    $a$x
+    $a$d    $e$f$a$b    $c$a      $x
+    $a$d    $e$f$g$b      $c$a  $b$a$x
+    $a    $d  $b      $c  $a  $b    $a$x
+          $a  $b    $c$a    $b$c$a  $x
+            $a$b    $c  $b  $c$b$c$a$x
+            $a$b          $c  $b$c$a$x
+          $a$b          $c$b    $a$x
+            $a  $b          $c$a  $x
+    $a      $x  $a  $b    $c$a  $f$a$x
+    $a$f$g$d$a    $c$d$a  $d    $g$a$x
+      $a  $d  $c$d  $a$x  $a$c$d$c$a$x
+          $a$d  $g$a$x    $a$d  $a$x
+            $a  $f$a$x  $a$f$g$d$a$x
+                $a  $x  $a      $x
+EOC
