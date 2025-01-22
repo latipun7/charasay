@@ -1,6 +1,6 @@
 [package]
 name = "charasay"
-version = "3.2.0"
+version = "3.3.0"
 authors = ["Latif Sulistyo <latifsulistyo.me@gmail.com>"]
 edition = "2021"
 description = "The future of cowsay 🐮! Colorful characters saying something 🗨️."
@@ -20,11 +20,11 @@ categories = [
 name = "chara"
 
 [dependencies]
-clap_complete = "4.5.40"
-clap = { version = "4.5.23", features = ["derive"] }
+clap_complete = "4.5.42"
+clap = { version = "4.5.27", features = ["derive"] }
 rust-embed = { version = "8.5.0", features = ["debug-embed"] }
 textwrap = { version = "0.16.1", features = ["terminal_size"] }
 unicode-width = "0.2.0"
 regex = "1.11.1"
 rand = "0.8.5"
-strip-ansi-escapes = "0.2.0"
+strip-ansi-escapes = "0.2.1"
