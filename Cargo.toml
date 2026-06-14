@@ -1,30 +1,30 @@
 [package]
 name = "charasay"
-version = "3.3.0"
+version = "3.3.1"
 authors = ["Latif Sulistyo <latifsulistyo.me@gmail.com>"]
 edition = "2021"
 description = "The future of cowsay 🐮! Colorful characters saying something 🗨️."
 repository = "https://github.com/latipun7/charasay"
 license = "MIT"
 readme = "readme.md"
-keywords = ["cowsay", "print", "ansi"]
+keywords = ["ansi", "cowsay", "print"]
 categories = [
   "command-line-utilities",
-  "value-formatting",
-  "text-processing",
-  "visualization",
   "rendering",
+  "text-processing",
+  "value-formatting",
+  "visualization",
 ]
 
 [[bin]]
 name = "chara"
 
 [dependencies]
-clap_complete = "4.5.42"
 clap = { version = "4.5.27", features = ["derive"] }
+clap_complete = "4.5.42"
+rand = "0.8.5"
+regex = "1.11.1"
 rust-embed = { version = "8.5.0", features = ["debug-embed"] }
+strip-ansi-escapes = "0.2.1"
 textwrap = { version = "0.16.1", features = ["terminal_size"] }
 unicode-width = "0.2.0"
-regex = "1.11.1"
-rand = "0.8.5"
-strip-ansi-escapes = "0.2.1"
