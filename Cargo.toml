@@ -24,7 +24,7 @@ clap = { version = "4.5.27", features = ["derive"] }
 clap_complete = "4.5.42"
 rand = "0.8.5"
 regex = "1.11.1"
-rust-embed = { version = "8.5.0", features = ["debug-embed"] }
+rust-embed = { version = "8.11.0", features = ["debug-embed"] }
 strip-ansi-escapes = "0.2.1"
 textwrap = { version = "0.16.1", features = ["terminal_size"] }
 unicode-width = "0.2.0"
