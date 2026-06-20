@@ -117,7 +117,8 @@ fn parse_character(chara: &Chara, voice_line: &str) -> String {
     let charas = stripped_chara.split('+').collect::<Vec<_>>();
     let mut parsed = String::new();
 
-    let re = Regex::new(r"(?<var>\$\w).*=.*(?<val>\x1B\[.*m\s*).;").unwrap();
+    // Capture multi-letter variable names like $a, $ab, $abc
+    let re = Regex::new(r"(?<var>\$\w+)\s*=.*(?<val>\x1B\[.*?m\s*).;").unwrap();
     for chara in charas {
         // extract variable definition to HashMap
         let replacers: Vec<HashMap<&str, &str>> = re
@@ -139,12 +140,16 @@ fn parse_character(chara: &Chara, voice_line: &str) -> String {
             .replace("$x", "\x1B[49m  ")
             .replace("$t", voice_line);
 
-        // replace variable from character's body with actual value
-        for replacer in replacers {
-            chara_body = chara_body.replace(
-                replacer.get("var").copied().unwrap(),
-                replacer.get("val").copied().unwrap(),
-            );
+        // replace variable from character's body with actual value,
+        // sorting longest-first to avoid partial matches (e.g. $a inside $ab)
+        let mut sorted: Vec<(&&str, &&str)> = replacers
+            .iter()
+            .map(|r| (r.get("var").unwrap(), r.get("val").unwrap()))
+            .collect();
+        sorted.sort_by_key(|b| std::cmp::Reverse(b.0.len())); // longest var name first
+
+        for (var_name, val) in sorted {
+            chara_body = chara_body.replace(var_name, val);
         }
 
         parsed.push_str(&format!("{}\n\n\n", &chara_body))
