@@ -1,6 +1,6 @@
 use std::{collections::HashMap, error::Error, fs::File, io::Read, path::PathBuf, str::from_utf8};
 
-use rand::seq::SliceRandom;
+use rand::prelude::IndexedRandom;
 use regex::Regex;
 use rust_embed::RustEmbed;
 
@@ -86,7 +86,7 @@ fn load_raw_chara_string(chara: &Chara) -> String {
 
         Chara::Random => {
             let charas = Asset::iter().collect::<Vec<_>>();
-            let choosen_chara = charas.choose(&mut rand::thread_rng()).unwrap().clone();
+            let choosen_chara = charas.choose(&mut rand::rng()).unwrap().clone();
             let asset = Asset::get(&choosen_chara).unwrap();
             raw_chara = from_utf8(&asset.data)
                 .unwrap_or_else(|err| todo!("Log ERROR: {:#?}", err))
