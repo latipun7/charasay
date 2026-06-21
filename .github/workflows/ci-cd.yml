@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    tags: ["*"]
+    tags: ['*']
 
 concurrency:
   group: ci-cd-${{ github.ref }}
@@ -43,6 +43,9 @@ jobs:
 
       - name: 🧪 Run Tests
         run: cargo test --locked --all-targets --all-features
+
+      - name: 📦 Dry-run publish check
+        run: cargo publish --dry-run
 
   build-artifacts:
     name: ⚙️ Build (${{ matrix.artifact-name }})
@@ -125,7 +128,7 @@ jobs:
 
   release:
     name: 🚀 Create Release
-    if: github.ref_type	== 'tag'
+    if: github.ref_type == 'tag'
     needs: [build-artifacts]
     runs-on: ubuntu-latest
 
@@ -133,7 +136,15 @@ jobs:
       - name: ⬇️ Download All Binary Artifacts
         uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
 
-      - name: 🗃️Create Release
+      - name: 🦀 Install Rust (stable)
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: 📦 Publish to crates.io
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish
+
+      - name: 🗃️ Create Release
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
