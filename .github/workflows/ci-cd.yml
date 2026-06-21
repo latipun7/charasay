@@ -136,6 +136,9 @@ jobs:
       - name: ⬇️ Download All Binary Artifacts
         uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
 
+      - name: 🛎️ Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
       - name: 🦀 Install Rust (stable)
         uses: dtolnay/rust-toolchain@stable
 
