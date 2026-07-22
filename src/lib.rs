@@ -152,7 +152,7 @@ fn parse_character(chara: &Chara, voice_line: &str) -> String {
             chara_body = chara_body.replace(var_name, val);
         }
 
-        parsed.push_str(&format!("{}\n\n\n", &chara_body))
+        parsed.push_str(&format!("{}\n\n\n", chara_body))
     }
 
     parsed.trim_end().to_string()

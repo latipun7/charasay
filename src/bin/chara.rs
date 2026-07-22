@@ -1,13 +1,13 @@
 use charasay::errors::CustomError;
 use std::{
     error::Error,
-    io::{stdin, stdout, Read},
+    io::{Read, stdin, stdout},
     path::PathBuf,
 };
 
-use charasay::{bubbles::BubbleType, format_character, print_character, Chara, BUILTIN_CHARA};
+use charasay::{BUILTIN_CHARA, Chara, bubbles::BubbleType, format_character, print_character};
 use clap::{Args, Command, CommandFactory, Parser, Subcommand};
-use clap_complete::{generate, Generator, Shell};
+use clap_complete::{Generator, Shell, generate};
 use textwrap::termwidth;
 
 const BORDER_WIDTH: usize = 6;
@@ -81,8 +81,8 @@ struct Charas {
     all: bool,
 }
 
-fn print_completions<G: Generator>(gen: G, cmd: &mut Command) {
-    generate(gen, cmd, cmd.get_name().to_string(), &mut stdout());
+fn print_completions<G: Generator>(shell: G, cmd: &mut Command) {
+    generate(shell, cmd, cmd.get_name().to_string(), &mut stdout());
 }
 
 fn print_all_characters(
@@ -229,12 +229,12 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         Commands::Completions { shell } => {
             let mut cmd = Cli::command();
-            let gen = match shell {
+            let target = match shell {
                 Some(s) => s,
                 None => Shell::from_env().unwrap_or(Shell::Bash),
             };
 
-            print_completions(gen, &mut cmd);
+            print_completions(target, &mut cmd);
         }
 
         Commands::List => {
