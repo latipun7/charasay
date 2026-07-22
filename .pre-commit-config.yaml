@@ -1,0 +1,38 @@
+# Pre-commit hooks managed by prek (https://prek.j178.dev)
+# Install: prek install
+# Run all: prek run --all-files
+
+repos:
+  # ── Rust ────────────────────────────────────────────────────────────
+  - repo: local
+    hooks:
+      - id: rustfmt
+        name: rustfmt
+        language: system
+        entry: rustfmt
+        types: [rust]
+
+      - id: cargo-clippy
+        name: cargo clippy
+        language: system
+        entry: cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
+        types: [rust]
+        pass_filenames: false
+
+  # ── Prettier ────────────────────────────────────────────────────────
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier
+        entry: prettier
+        args: [--write, --ignore-unknown]
+        language: node
+        types: [text]
+        additional_dependencies:
+          - prettier@3.9.5
+
+  # ── Markdown ────────────────────────────────────────────────────────
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.23.1
+    hooks:
+      - id: markdownlint-cli2

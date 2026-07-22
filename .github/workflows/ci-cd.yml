@@ -20,8 +20,9 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: 🦀 Install Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@master
         with:
+          toolchain: 1.97.1
           components: clippy, rustfmt
 
       - name: ♻️ Manage Cache
@@ -35,14 +36,20 @@ jobs:
             cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
             cargo-${{ runner.os }}-
 
+      - name: 🖊️ Check Formatting (Prettier)
+        run: npx --yes prettier@3.9.5 --check --ignore-unknown .
+
+      - name: 📝 Check Markdownlint
+        run: npx --yes markdownlint-cli2@0.23.1 '**/*.md'
+
       - name: 🎨 Check Formatting
-        run: cargo fmt --check --all
+        run: make check-fmt
 
       - name: 📎 Check Linting
-        run: cargo clippy --locked --all-targets --all-features -- -D warnings
+        run: make check-clippy
 
       - name: 🧪 Run Tests
-        run: cargo test --locked --all-targets --all-features
+        run: make test
 
       - name: 📦 Dry-run publish check
         run: cargo publish --dry-run
@@ -77,8 +84,9 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: 🦀 Install Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@master
         with:
+          toolchain: 1.97.1
           target: ${{ matrix.cargo-target }}
 
       - name: 🔗 Install Linker packages
@@ -141,8 +149,10 @@ jobs:
         with:
           merge-multiple: true
 
-      - name: 🦀 Install Rust (stable)
-        uses: dtolnay/rust-toolchain@stable
+      - name: 🦀 Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.97.1
 
       - name: 📦 Publish to crates.io
         env:
