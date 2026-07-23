@@ -15,7 +15,7 @@ $the_chara = <<EOC
   $t
    $t
     $t    $a  $x
-     $t $a$b$a$x  
+     $t $a$b$a$x
         $a$b$c$x        $d  $x    $e$x
         $b$f  $d$x  $c$d$b$a$f$c$e  $x
         $f$a$d$a$d$b$a$b  $a$f$c$d$e$x
