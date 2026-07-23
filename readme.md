@@ -28,13 +28,13 @@ while this make us all happy 😁.
 
 For Arch Linux, package available via AUR. Example install this with AUR helper:
 
-```console
+```sh
 yay -S charasay
 ```
 
 or
 
-```console
+```sh
 yay -S charasay-bin
 ```
 
@@ -42,7 +42,7 @@ yay -S charasay-bin
 
 If you have `rustup` or `cargo`, this tool available on crates.io. Install this with:
 
-```console
+```sh
 cargo install charasay
 ```
 
@@ -54,12 +54,12 @@ to execute on extracted file, then place it on your `PATH`.
 
 Alternatively, clone this repository, then build this with `cargo build --release`.
 
-### Prerequisites
+## Usage
+
+### Terminal
 
 To display characters, your terminal needs to support true color (24-bit color).
 Unicode fonts are needed to render the border of speech bubble.
-
-## Usage
 
 ### Display Default Character to Say Something
 
@@ -71,9 +71,9 @@ If message is empty, it would accept from standard input, piping would works:
 
 ### Display Different Character
 
-Run `chara say -f ferris "Hello rustaceans!"`.
+Run `chara say --chara=ferris 'Hello rustaceans!'`.
 
-It could display external `.chara` files: `chara say -f ~/path/test.chara "Nice"`.
+It could display external `.chara` files: `chara say --file=~/path/test.chara 'Nice'`.
 
 > Note: `.chara` files could be generated from PNG file.
 >
@@ -127,6 +127,51 @@ Options:
 ```
 
 ![Ferris](https://user-images.githubusercontent.com/20012970/222370485-3d43052f-977a-441e-a0c2-efc538d8e693.png)
+
+## Contributing
+
+### Prerequisites
+
+- [Install `mise`](https://mise.jdx.dev/) — manages all dev tools (Rust toolchain, prek, cocogitto)
+- [Activate `mise`](https://mise.jdx.dev/installing-mise.html#shells) in your shell, e.g. `eval "$(mise activate zsh)"`
+
+### Quick Start
+
+```sh
+git clone https://github.com/latipun7/charasay.git
+cd charasay
+mise install
+```
+
+This installs the Rust toolchain (via `rust-toolchain.toml`), prek, cocogitto, and
+configures git hooks automatically (via postinstall hook).
+
+### Development Commands
+
+| Command                 | Description                                    |
+| ----------------------- | ---------------------------------------------- |
+| `mise run check`        | Check Rust formatting and clippy               |
+| `mise run test`         | Run all tests                                  |
+| `mise run lint`         | Fix formatting and linting issues              |
+| `mise run build`        | Build release binary                           |
+| `mise run prettier`     | Run prettier on all files                      |
+| `mise run markdownlint` | Run markdownlint on all markdown files         |
+| `mise run ci-check`     | Run all CI checks (formatting, linting, tests) |
+| `mise run release`      | Auto-bump version and create tag               |
+| `mise run changelog`    | Generate changelog                             |
+
+### Commit Convention
+
+This project follows [Conventional Commits](https://www.conventionalcommits.org/).
+Commit messages are linted automatically via [cocogitto](https://docs.cocogitto.io/).
+
+```sh
+# With cocogitto (recommended)
+cog commit feat "add awesome feature"
+
+# With git (enforced by commit-msg hook)
+git commit -m "feat: add awesome feature"
+```
 
 ## Hacking to the Gate~! 🧑‍💻🎶
 

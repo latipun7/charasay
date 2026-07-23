@@ -1,0 +1,42 @@
+tag_prefix = "v"
+ignore_merge_commits = true
+branch_whitelist = ["main"]
+
+pre_package_bump_hooks = [
+  "mise run ci-check",
+  "echo 'bumping from {{latest|0.0.0}} to {{version|0.0.1}}'",
+  "cargo set-version --package {{package}} {{version}}",
+  "mise run build",
+]
+
+post_bump_hooks = [
+  "echo 'This is a manual bump, no automated cargo release or push to remote will be triggered.'"
+]
+
+[commit_types]
+feat = { changelog_title = "✨ Features" }
+fix = { changelog_title = "🐛 Bug Fixes" }
+docs = { changelog_title = "📚 Documentation" }
+refactor = { changelog_title = "♻️ Refactoring" }
+perf = { changelog_title = "⚡ Performance Improvements" }
+build = { changelog_title = "🏗️ Build System" }
+ci = { changelog_title = "👷 Continuous Integration" }
+revert = { changelog_title = "⏪ Reverts" }
+security = { changelog_title = "🛡️ Security Fixes" }
+style = { omit_from_changelog = true }
+test = { omit_from_changelog = true }
+chore = { omit_from_changelog = true }
+
+[changelog]
+path = "changelog.md"
+template = "remote"
+remote = "github.com"
+owner = "latipun7"
+repository = "charasay"
+authors = [
+  { signature = "Latipun", username = "latipun7" },
+  { signature = "Latif Sulistyo", username = "latipun7" },
+  { signature = "Volker Schwaberow", username = "vschwaberow" },
+  { signature = "Dylan Hackworth", username = "dylhack" },
+  { signature = "renovate[bot]", username = "apps/renovate" },
+]

@@ -1,0 +1,123 @@
+[settings]
+idiomatic_version_file_enable_tools = ["rust"]
+
+[tools]
+prek = "0.4.10"
+cocogitto = "7.0.0"
+
+[hooks]
+postinstall = "prek install"
+
+[tasks.check]
+description = "Run Rust format and clippy checks (read-only)"
+depends = ["check-fmt", "check-clippy"]
+
+[tasks.check-fmt]
+description = "Check Rust formatting without writing"
+run = "cargo fmt --check --all"
+env = { CARGO_TERM_COLOR = "always" }
+
+[tasks.check-clippy]
+description = "Check Rust linting without fixing"
+run = "cargo clippy --locked --all-targets --all-features -- -D warnings"
+env = { CARGO_TERM_COLOR = "always" }
+
+[tasks.test]
+description = "Run all tests"
+run = "cargo test --locked --workspace --all-targets --all-features"
+env = { CARGO_TERM_COLOR = "always" }
+
+[tasks.prettier]
+description = "Run prettier on all files"
+run = "prek run --all-files --verbose prettier"
+env = { PREK_COLOR = "always" }
+
+[tasks.markdownlint]
+description = "Run markdownlint-cli2 on all files"
+run = "prek run --all-files --verbose markdownlint-cli2"
+env = { PREK_COLOR = "always" }
+
+[tasks.ci-check]
+description = "Run all CI checks (prettier, markdownlint, fmt, clippy, tests)"
+depends = ["prettier", "markdownlint", "check-fmt", "check-clippy", "test"]
+
+[tasks.lint]
+description = "Fix formatting and linting issues (write mode)"
+depends = ["fmt", "prettier", "markdownlint"]
+run = "cargo clippy --fix --locked --workspace --all-targets --all-features --allow-dirty --allow-staged -- -D warnings"
+env = { CARGO_TERM_COLOR = "always" }
+
+[tasks.fmt]
+description = "Format Rust code"
+run = "cargo fmt --all"
+env = { CARGO_TERM_COLOR = "always" }
+
+[tasks.build]
+description = "Build release binary"
+run = "cargo build --locked --release"
+env = { CARGO_TERM_COLOR = "always" }
+
+[tasks.clean]
+description = "Clean build artifacts"
+run = "cargo clean"
+env = { CARGO_TERM_COLOR = "always" }
+
+[tasks.install]
+description = "Install charasay globally via cargo"
+run = "cargo install --locked --path ."
+env = { CARGO_TERM_COLOR = "always" }
+
+[tasks.release]
+description = "Bump version + changelog + tag (review, then git push --tags)"
+env = { CLICOLOR_FORCE = "1" }
+shell = "bash -c"
+run = """
+cog bump --auto
+TAG=$(cog -v get-version --tag)
+
+# Helper function to check available formatters
+render_md() {
+  if command -v glow > /dev/null 2>&1; then
+    THEME="${XDG_CONFIG_HOME:-$HOME/.config}/glow/catppuccin-mocha.json"
+    if [ -f "$THEME" ]; then
+      glow --style="$THEME" -
+    else
+      glow -s dark -
+    fi
+  elif command -v bat > /dev/null 2>&1; then
+    bat --color=always -l md
+  else
+    cat
+  fi
+}
+
+cat << 'EOF' | sed "s|__TAG__|$TAG|g" | render_md
+### Release
+
+Releases are semi-automated with cocogitto:
+
+```sh
+# review the changes:
+git log --oneline -3
+# if happy, push:
+git push && git push --tags
+```
+
+If something went wrong, undo locally before pushing:
+
+```sh
+# undo commit, keep changes
+git reset --soft HEAD~1
+# deletes tag
+git tag -d __TAG__
+```
+EOF
+"""
+
+[tasks."relese:dry-run"]
+description = "Dry run of release command (bump version + changelog + tag)"
+run = "cog bump --dry-run --auto"
+
+[tasks.changelog]
+description = "Generate changelog"
+run = "cog changelog"

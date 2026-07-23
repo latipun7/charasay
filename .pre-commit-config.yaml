@@ -53,3 +53,13 @@ repos:
     rev: v0.23.1
     hooks:
       - id: markdownlint-cli2
+
+  # ── Commit Message Lint ─────────────────────────────────────────────
+  - repo: local
+    hooks:
+      - id: cog-verify
+        name: cog verify (conventional commits)
+        language: system
+        entry: cog verify --file
+        stages: [commit-msg]
+        pass_filenames: true
