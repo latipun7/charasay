@@ -38,5 +38,4 @@ authors = [
   { signature = "Latif Sulistyo", username = "latipun7" },
   { signature = "Volker Schwaberow", username = "vschwaberow" },
   { signature = "Dylan Hackworth", username = "dylhack" },
-  { signature = "renovate[bot]", username = "apps/renovate" },
 ]
