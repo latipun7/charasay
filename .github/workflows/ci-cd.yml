@@ -81,19 +81,6 @@ jobs:
         with:
           experimental: true
 
-      - name: 🎯 Add cross-compilation target
-        run: rustup target add ${{ matrix.cargo-target }}
-
-      - name: 🔗 Install Linker packages
-        if: matrix.linker != ''
-        run: |
-          sudo apt-get -y update
-          sudo apt-get -y install ${{ matrix.linker }}
-
-      - name: 🛣️ Set Linker Path
-        if: matrix.cargo-target == 'aarch64-linux-android'
-        run: echo "$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin" >> $GITHUB_PATH
-
       - name: ♻️ Manage Build Cache
         id: cache-rust
         uses: actions/cache@2c8a9bd7457de244a408f35966fab2fb45fda9c8 # v6.0.0
@@ -111,6 +98,19 @@ jobs:
       - name: ⚙️ Force Reinstall Rust Toolchains on Cache Miss
         if: ${{ steps.setup-mise.outputs.cache-hit == 'true' && steps.cache-rust.outputs.cache-hit != 'true' }}
         run: mise install --force rust
+
+      - name: 🎯 Add cross-compilation target
+        run: rustup target add ${{ matrix.cargo-target }}
+
+      - name: 🔗 Install Linker packages
+        if: matrix.linker != ''
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install ${{ matrix.linker }}
+
+      - name: 🛣️ Set Linker Path
+        if: matrix.cargo-target == 'aarch64-linux-android'
+        run: echo "$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin" >> $GITHUB_PATH
 
       - name: 🛠️ Build Binary
         run: cargo build --locked --release --target ${{ matrix.cargo-target }}
