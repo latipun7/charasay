@@ -20,20 +20,28 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: 📦 Setup mise
+        id: setup-mise
         uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
         with:
           experimental: true
 
-      - name: ♻️ Manage Cargo Cache
+      - name: ♻️ Manage Rust toolchains Cache
+        id: cache-rust
         uses: actions/cache@2c8a9bd7457de244a408f35966fab2fb45fda9c8 # v6.0.0
         with:
           path: |
+            ~/.rustup/toolchains/
             ~/.cargo/
             target/
-          key: cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+          key: rust-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
-            cargo-${{ runner.os }}-
+            rust-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+            rust-${{ runner.os }}-
+
+      # HACK: based on https://github.com/jdx/mise-action/issues/215
+      - name: ⚙️ Force Reinstall Rust Toolchains on Cache Miss
+        if: ${{ steps.setup-mise.outputs.cache-hit == 'true' && steps.cache-rust.outputs.cache-hit != 'true' }}
+        run: mise install --force rust
 
       - name: ✅ Run CI Checks
         run: mise run ci-check
@@ -68,6 +76,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: 📦 Setup mise
+        id: setup-mise
         uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
         with:
           experimental: true
@@ -86,15 +95,22 @@ jobs:
         run: echo "$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin" >> $GITHUB_PATH
 
       - name: ♻️ Manage Build Cache
+        id: cache-rust
         uses: actions/cache@2c8a9bd7457de244a408f35966fab2fb45fda9c8 # v6.0.0
         with:
           path: |
+            ~/.rustup/toolchains/
             ~/.cargo/
             target/
-          key: cargo-${{ matrix.artifact-name }}-${{ hashFiles('**/Cargo.lock') }}
+          key: rust-${{ matrix.artifact-name }}-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            cargo-${{ matrix.artifact-name }}-${{ hashFiles('**/Cargo.lock') }}
-            cargo-${{ matrix.artifact-name }}-
+            rust-${{ matrix.artifact-name }}-${{ hashFiles('**/Cargo.lock') }}
+            rust-${{ matrix.artifact-name }}-
+
+      # HACK: based on https://github.com/jdx/mise-action/issues/215
+      - name: ⚙️ Force Reinstall Rust Toolchains on Cache Miss
+        if: ${{ steps.setup-mise.outputs.cache-hit == 'true' && steps.cache-rust.outputs.cache-hit != 'true' }}
+        run: mise install --force rust
 
       - name: 🛠️ Build Binary
         run: cargo build --locked --release --target ${{ matrix.cargo-target }}
