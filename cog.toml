@@ -22,7 +22,7 @@ perf = { changelog_title = "⚡ Performance Improvements" }
 build = { changelog_title = "🏗️ Build System" }
 ci = { changelog_title = "👷 Continuous Integration" }
 revert = { changelog_title = "⏪ Reverts" }
-security = { changelog_title = "🛡️ Security Fixes" }
+security = { changelog_title = "🛡️ Security Fixes", bump_patch = true }
 style = { omit_from_changelog = true }
 test = { omit_from_changelog = true }
 chore = { omit_from_changelog = true }
