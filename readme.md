@@ -24,6 +24,15 @@ while this make us all happy 😁.
 
 ## Installation
 
+### Scoop (Windows)
+
+For Windows, package available via Scoop. Add the bucket and install:
+
+```powershell
+scoop bucket add latipun7 https://github.com/latipun7/scoop-bucket
+scoop install charasay
+```
+
 ### AUR
 
 For Arch Linux, package available via AUR. Example install this with AUR helper:
