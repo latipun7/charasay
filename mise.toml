@@ -2,7 +2,7 @@
 idiomatic_version_file_enable_tools = ["rust"]
 
 [tools]
-prek = "0.4.10"
+prek = "0.5.2"
 cocogitto = "7.0.0"
 
 [hooks]
