@@ -15,7 +15,7 @@ repos:
 
   # ── TOML ────────────────────────────────────────────────────────────
   - repo: https://github.com/tombi-toml/tombi-pre-commit
-    rev: v1.2.4
+    rev: v1.5.2
     hooks:
       - id: tombi-format
         files: \.toml$
