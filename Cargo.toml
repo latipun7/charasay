@@ -20,7 +20,7 @@ name = "chara"
 
 [dependencies]
 clap = { version = "=4.6.3", features = ["derive"] }
-clap_complete = "=4.6.7"
+clap_complete = "=4.6.9"
 rand = "=0.10.2"
 regex = "=1.13.1"
 rust-embed = { version = "=8.12.0", features = ["debug-embed"] }
