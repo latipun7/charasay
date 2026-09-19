@@ -46,7 +46,7 @@ repos:
         language: node
         types: [text]
         additional_dependencies:
-          - prettier@3.9.6
+          - prettier@3.9.7
 
   # ── Markdown ────────────────────────────────────────────────────────
   - repo: https://github.com/DavidAnson/markdownlint-cli2
