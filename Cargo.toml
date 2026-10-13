@@ -25,5 +25,5 @@ rand = "=0.10.2"
 regex = "=1.13.1"
 rust-embed = { version = "=8.12.0", features = ["debug-embed"] }
 strip-ansi-escapes = "=0.2.1"
-textwrap = { version = "=0.16.2", features = ["terminal_size"] }
+textwrap = { version = "=0.16.4", features = ["terminal_size"] }
 unicode-width = "=0.2.2"
